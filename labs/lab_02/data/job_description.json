@@ -1,0 +1,14 @@
+{
+  "id": "jd-synthetic-001",
+  "title": "AI Tools Engineer",
+  "company": "Northstar Systems",
+  "requirements": [
+    "Python production experience",
+    "Ability to integrate LLM APIs into internal tools",
+    "Comfort with evals and debugging model behavior"
+  ],
+  "nice_to_have": [
+    "Experience with agent frameworks",
+    "Experience writing developer-facing documentation"
+  ]
+}

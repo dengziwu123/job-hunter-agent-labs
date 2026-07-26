@@ -1,0 +1,5 @@
+{
+  "fit_summary": ["This should be a string, not a list."],
+  "strengths": "Python",
+  "unexpected_field": "This field should be rejected."
+}
