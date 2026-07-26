@@ -6,6 +6,7 @@
     <meta name="description" content="A local progressive Harness Engineering lab." />
     <title>Harness Lab · Job Agent</title>
     <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/comparison_state.js" defer></script>
     <script src="/static/app.js" defer></script>
   </head>
   <body>
@@ -20,6 +21,10 @@
         </div>
       </div>
       <div class="topbar-controls">
+        <button id="open-instructions" class="button guide-button" type="button" aria-haspopup="dialog" aria-controls="instructions-dialog">
+          <span>Open Lab instructions</span>
+        </button>
+        <button id="open-diff" class="button diff-button" type="button" aria-controls="diff-workspace" aria-pressed="false" hidden>Diff</button>
         <label id="backend-control" class="stage-control" for="backend-select" hidden>
           <span>Product backend</span>
           <select id="backend-select" aria-label="Product backend"></select>
@@ -31,7 +36,7 @@
         <button id="reload-agent" class="icon-button reload-button" type="button" title="Reload Python and .env settings" aria-label="Reload Python and .env settings">
           <span class="reload-icon" aria-hidden="true">↻</span>
         </button>
-        <button id="connection-status" class="status-pill status-button" data-status="loading" type="button" title="Configure Gemini API key" aria-label="Configure Gemini API key">
+        <button id="connection-status" class="status-pill status-button" data-status="loading" type="button" title="Configure model provider" aria-label="Configure model provider">
           <span class="status-dot" aria-hidden="true"></span>
           <span id="connection-label" aria-live="polite">Connecting…</span>
         </button>
@@ -43,7 +48,7 @@
       <button id="dismiss-privacy" class="text-button" type="button">I understand</button>
     </div>
 
-    <main class="app-shell">
+    <main id="app-shell" class="app-shell">
       <aside class="panel materials-panel" aria-labelledby="materials-title">
         <div class="panel-heading">
           <div>
@@ -99,6 +104,47 @@
           </div>
         </div>
 
+        <section id="diff-workspace" class="diff-workspace" aria-labelledby="diff-title" hidden>
+          <div class="diff-shell">
+            <header class="diff-header">
+              <div>
+                <div class="eyebrow">AGENTIC INFRASTRUCTURE DIFF</div>
+                <h2 id="diff-title">Diff</h2>
+                <p id="diff-prompt" class="diff-prompt"></p>
+              </div>
+              <div class="diff-header-meta">
+                <span id="diff-response-status" class="diff-status"></span>
+                <span id="diff-snapshot" class="run-id">Same input snapshot</span>
+                <button id="rerun-diff" class="button secondary" type="button" hidden>Rerun</button>
+                <button id="reset-diff" class="button secondary" type="button">Reset Diff</button>
+                <button id="close-diff" class="icon-button" type="button" aria-label="Close Diff">×</button>
+              </div>
+            </header>
+
+            <section id="diff-ready" class="diff-ready" hidden>
+              <div>
+                <div class="eyebrow">BEFORE / AFTER</div>
+                <h3>Compare the same prompt across both Labs</h3>
+                <p id="diff-ready-copy">Enter a prompt in the composer below. The comparison uses a private snapshot and does not add messages to your conversation.</p>
+              </div>
+              <div class="diff-ready-meta">
+                <span id="diff-input-summary" class="fine-print"></span>
+              </div>
+            </section>
+
+            <div id="diff-error" class="diff-error" role="alert" hidden></div>
+            <div id="diff-loading" class="diff-loading" hidden>
+              <span class="loading-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              Running both snapshots…
+            </div>
+
+            <div id="diff-content" class="diff-content" hidden>
+              <div id="diff-dialog-grid" class="diff-dialog-grid"></div>
+              <div id="diff-span-inspector" class="diff-span-inspector" hidden></div>
+            </div>
+          </div>
+        </section>
+
         <div id="chat-transcript" class="chat-transcript" aria-live="polite">
           <div class="empty-chat">
             <div class="empty-icon" aria-hidden="true">↗</div>
@@ -106,6 +152,8 @@
             <p>Choose an example above or ask about the attached profile and job description.</p>
           </div>
         </div>
+
+        <div id="example-actions" class="example-actions"></div>
 
         <form id="chat-form" class="composer">
           <label class="sr-only" for="message-input">Message</label>
@@ -170,12 +218,20 @@
         <div class="dialog-heading">
           <div>
             <div class="eyebrow">LOCAL SETUP</div>
-            <h2>Connect Gemini</h2>
+            <h2>Connect a model provider</h2>
           </div>
           <button id="close-api-key" class="icon-button" type="button" aria-label="Close">×</button>
         </div>
-        <p class="dialog-copy">Paste your Gemini API key below. It will be saved only to this workspace's <code>.env</code> file.</p>
-        <label class="field-label" for="api-key-input">Gemini API key</label>
+        <p class="dialog-copy">Choose Gemini, OpenAI, or Anthropic. These settings are saved only to this workspace's <code>.env</code> file.</p>
+        <label class="field-label" for="provider-select">Provider</label>
+        <select id="provider-select">
+          <option value="gemini">Gemini</option>
+          <option value="openai">OpenAI</option>
+          <option value="anthropic">Anthropic</option>
+        </select>
+        <label class="field-label" for="model-input">Model</label>
+        <input id="model-input" type="text" maxlength="200" autocomplete="off" spellcheck="false" required />
+        <label class="field-label" for="api-key-input">API key</label>
         <input id="api-key-input" type="password" maxlength="512" autocomplete="off" spellcheck="false" placeholder="Paste API key" required />
         <p class="fine-print">The key will not be shown again or included in the browser debug log.</p>
         <div class="dialog-actions">
@@ -183,6 +239,25 @@
           <button class="button primary" type="submit" id="save-api-key">Save API key</button>
         </div>
       </form>
+    </dialog>
+
+    <dialog id="instructions-dialog" class="instructions-dialog" aria-labelledby="instructions-title">
+      <div class="instructions-shell">
+        <header class="instructions-header">
+          <div>
+            <div class="eyebrow">LAB INSTRUCTIONS</div>
+            <h2 id="instructions-title">Current Lab instructions</h2>
+            <p id="instructions-source" class="instructions-source"></p>
+          </div>
+          <button id="close-instructions" class="icon-button" type="button" aria-label="Close Lab instructions">×</button>
+        </header>
+        <div id="instructions-content" class="instructions-content markdown" aria-live="polite">
+          <p class="instructions-placeholder">Open the guide to load the current Lab handout.</p>
+        </div>
+        <footer class="instructions-footer">
+          <button id="close-instructions-footer" class="button secondary" type="button">Close instructions</button>
+        </footer>
+      </div>
     </dialog>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
