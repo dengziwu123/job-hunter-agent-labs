@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.template
+.venv/
+node_modules/
+.pytest_cache/
+.runtime/
+__pycache__/
+*.pyc
+
+artifacts/**
+!artifacts/.gitkeep
+
+# Instructor samples may be kept in the authoring repo, but should be excluded
+# from student-facing release packages.

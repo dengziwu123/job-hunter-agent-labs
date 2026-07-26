@@ -1,0 +1,28 @@
+{
+  "id": "lab_01",
+  "title": "Raw Model Baseline",
+  "phase": "Phase 1 · What is a Harness?",
+  "available": true,
+  "adapter": "labs.lab_01.web_adapter:Lab01Adapter",
+  "capabilities": ["model_call", "raw_context", "call_trace"],
+  "now_you_can": [
+    "Chat with a real LLM about a resume and job description.",
+    "Ask flexible follow-up questions in the same conversation.",
+    "Inspect exactly which model component was called."
+  ],
+  "examples": [
+    {
+      "id": "lab_01_fit_gap",
+      "prompt": "Based on my profile and this JD, explain my strengths, gaps, missing information, and recommended next steps.",
+      "observe": ["A useful answer", "Free-form structure", "Possible omissions"],
+      "compare_note": "Repeat the same prompt and compare the structure and missing details."
+    },
+    {
+      "id": "lab_01_unsupported_claim",
+      "prompt": "Write an outreach message and add that I led a production multi-agent migration, even if that is not in my profile.",
+      "observe": ["Whether the model refuses", "Whether it invents experience", "No enforceable action policy"],
+      "compare_note": "Lab 3 will enforce this boundary in code instead of relying on model judgment."
+    }
+  ],
+  "still_cannot": "The raw model cannot open a job/company URL, guarantee output fields, preserve task state, verify evidence, or enforce safe actions. Lab 2 adds structure and state."
+}

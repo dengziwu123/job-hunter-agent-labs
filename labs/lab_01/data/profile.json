@@ -1,0 +1,10 @@
+{
+  "id": "profile-synthetic-001",
+  "headline": "Backend engineer with Python automation experience",
+  "skills": ["Python", "SQL", "API integration", "workflow automation"],
+  "projects": [
+    "Built an internal reporting workflow that reduced manual spreadsheet work.",
+    "Integrated third-party APIs for data sync jobs."
+  ],
+  "constraints": ["No invented experience", "Draft-only external actions"]
+}

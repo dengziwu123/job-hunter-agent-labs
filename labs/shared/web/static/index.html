@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A local progressive Harness Engineering lab." />
+    <title>Harness Lab · Job Agent</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-logo">
+          <img src="/static/assets/cai-logo.png" alt="C.AI" width="1254" height="1254" />
+        </span>
+        <div>
+          <div class="eyebrow">HARNESS ENGINEERING LAB</div>
+          <h1>Job Agent</h1>
+        </div>
+      </div>
+      <div class="topbar-controls">
+        <label id="backend-control" class="stage-control" for="backend-select" hidden>
+          <span>Product backend</span>
+          <select id="backend-select" aria-label="Product backend"></select>
+        </label>
+        <label class="stage-control" for="stage-select">
+          <span>Current stage</span>
+          <select id="stage-select" aria-label="Current Lab"></select>
+        </label>
+        <button id="reload-agent" class="icon-button reload-button" type="button" title="Reload Python and .env settings" aria-label="Reload Python and .env settings">
+          <span class="reload-icon" aria-hidden="true">↻</span>
+        </button>
+        <button id="connection-status" class="status-pill status-button" data-status="loading" type="button" title="Configure Gemini API key" aria-label="Configure Gemini API key">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="connection-label" aria-live="polite">Connecting…</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="privacy-banner" class="privacy-banner" hidden>
+      <span>Your selected materials stay in this local workspace. Their extracted text is sent to the model provider when you chat.</span>
+      <button id="dismiss-privacy" class="text-button" type="button">I understand</button>
+    </div>
+
+    <main class="app-shell">
+      <aside class="panel materials-panel" aria-labelledby="materials-title">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">INPUT WORKSPACE</div>
+            <h2 id="materials-title">Job materials</h2>
+          </div>
+          <div class="panel-heading-actions">
+            <button id="clear-materials" class="icon-button" type="button" title="Clear materials" aria-label="Clear materials">⌫</button>
+          </div>
+        </div>
+
+        <p id="materials-intro" class="panel-intro">Add a resume and paste or upload the target job description.</p>
+        <div id="materials-list" class="materials-list" aria-live="polite"></div>
+        <div id="materials-pagination" class="materials-pagination" hidden></div>
+
+        <div class="material-actions">
+          <label class="field-label" for="material-kind">Add resume or JD as</label>
+          <select id="material-kind">
+            <option value="candidate_profile">Candidate profile / resume</option>
+            <option value="job_description">Job description</option>
+          </select>
+          <div class="action-row">
+            <label class="button secondary file-button">
+              <input id="material-file" type="file" accept=".txt,.md,.json,.pdf,.docx" />
+              <span id="upload-label">Upload file</span>
+            </label>
+            <button id="open-paste" class="button secondary" type="button">Paste text</button>
+          </div>
+          <p class="fine-print">TXT, MD, JSON, text PDF, or DOCX · 5 MB max</p>
+
+          <form id="web-source-form" class="web-source-actions" hidden>
+            <label class="field-label" for="web-source-url">Public job or company webpage</label>
+            <div class="url-action-row">
+              <input id="web-source-url" type="url" maxlength="2048" placeholder="https://company.example/jobs/role" required />
+              <button id="add-web-source" class="button secondary" type="submit">Add URL</button>
+            </div>
+            <p class="fine-print">The Lab 3 Agent fetches readable public HTML when you run it. No scraper code is required from you.</p>
+          </form>
+        </div>
+      </aside>
+
+      <section class="panel chat-panel" aria-labelledby="chat-title">
+        <div id="capability-card" class="capability-card"></div>
+
+        <div class="chat-heading">
+          <div>
+            <div class="eyebrow">LIVE PRODUCT</div>
+            <h2 id="chat-title">Conversation</h2>
+          </div>
+          <div class="heading-actions">
+            <button id="run-eval" class="button secondary compact" type="button" hidden>Run eval suite</button>
+            <button id="clear-chat" class="icon-button" type="button" title="Clear conversation" aria-label="Clear conversation">⌫</button>
+          </div>
+        </div>
+
+        <div id="chat-transcript" class="chat-transcript" aria-live="polite">
+          <div class="empty-chat">
+            <div class="empty-icon" aria-hidden="true">↗</div>
+            <h3>Try your current Agent</h3>
+            <p>Choose an example above or ask about the attached profile and job description.</p>
+          </div>
+        </div>
+
+        <form id="chat-form" class="composer">
+          <label class="sr-only" for="message-input">Message</label>
+          <textarea id="message-input" rows="3" placeholder="Ask your Job Agent…" required></textarea>
+          <div class="composer-footer">
+            <span id="composer-hint">⌘ + Enter to send</span>
+            <button id="send-button" class="button primary" type="submit">
+              <span class="send-label">Send</span>
+              <span class="loading-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="panel inspector-panel" aria-labelledby="inspector-title">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">WHAT ACTUALLY RAN</div>
+            <h2 id="inspector-title">Harness Inspector</h2>
+          </div>
+          <div class="panel-heading-actions">
+            <button id="copy-debug-log" class="text-button" type="button">Copy debug log</button>
+            <span id="run-id" class="run-id">No run</span>
+          </div>
+        </div>
+        <p class="panel-intro">Every event names the Python component and operation that was called.</p>
+        <div class="trajectory-scroll">
+          <div id="inspector-events" class="inspector-events">
+            <div class="empty-inspector">
+              <span class="trace-line"></span>
+              Send a message to see the call trace.
+            </div>
+          </div>
+          <div id="state-summary" class="state-summary" hidden></div>
+          <div id="artifact-links" class="artifact-links" hidden></div>
+        </div>
+      </aside>
+    </main>
+
+    <dialog id="paste-dialog">
+      <form id="paste-form" method="dialog">
+        <div class="dialog-heading">
+          <div>
+            <div class="eyebrow">LOCAL INPUT</div>
+            <h2>Paste job material</h2>
+          </div>
+          <button id="close-paste" class="icon-button" value="cancel" aria-label="Close">×</button>
+        </div>
+        <label class="field-label" for="paste-name">Display name</label>
+        <input id="paste-name" type="text" maxlength="120" value="Pasted notes" required />
+        <label class="field-label" for="paste-text">Text</label>
+        <textarea id="paste-text" rows="12" maxlength="250000" placeholder="Paste a resume or job description…" required></textarea>
+        <div class="dialog-actions">
+          <button class="button secondary" value="cancel" type="button" id="cancel-paste">Cancel</button>
+          <button class="button primary" value="default" type="submit">Add to workspace</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="api-key-dialog">
+      <form id="api-key-form">
+        <div class="dialog-heading">
+          <div>
+            <div class="eyebrow">LOCAL SETUP</div>
+            <h2>Connect Gemini</h2>
+          </div>
+          <button id="close-api-key" class="icon-button" type="button" aria-label="Close">×</button>
+        </div>
+        <p class="dialog-copy">Paste your Gemini API key below. It will be saved only to this workspace's <code>.env</code> file.</p>
+        <label class="field-label" for="api-key-input">Gemini API key</label>
+        <input id="api-key-input" type="password" maxlength="512" autocomplete="off" spellcheck="false" placeholder="Paste API key" required />
+        <p class="fine-print">The key will not be shown again or included in the browser debug log.</p>
+        <div class="dialog-actions">
+          <button class="button secondary" type="button" id="cancel-api-key">Cancel</button>
+          <button class="button primary" type="submit" id="save-api-key">Save API key</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
