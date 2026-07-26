@@ -14,7 +14,8 @@ def main() -> None:
     print(f"OK python_version={sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}")
     print("OK dependency_check=true")
     print(f"OK lab_tests_discovered={tests_dir.exists()}")
-    print(f"OK google_api_key_present={bool(settings.google_api_key)}")
+    print(f"OK llm_provider={settings.provider}")
+    print(f"OK provider_api_key_present={bool(settings.api_key)}")
     try:
         google_genai_installed = importlib.util.find_spec("google.genai") is not None
     except ModuleNotFoundError:
@@ -27,10 +28,12 @@ def main() -> None:
     if not tests_dir.exists():
         raise SystemExit(f"Missing tests directory: {tests_dir}")
 
-    if not settings.google_api_key:
-        raise SystemExit("GOOGLE_API_KEY is required for Lab 1 Gemini API baseline.")
+    if not settings.api_key:
+        raise SystemExit(
+            f"{settings.api_key_env_var} is required for the selected {settings.provider} provider."
+        )
 
-    if not google_genai_installed:
+    if settings.provider == "gemini" and not google_genai_installed:
         raise SystemExit("google-genai is required. Run `uv sync`.")
 
 

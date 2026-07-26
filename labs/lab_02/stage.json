@@ -1,0 +1,25 @@
+{
+  "id": "lab_02",
+  "title": "Structured Output & State",
+  "phase": "Phase 2 · Prompt and State",
+  "available": true,
+  "adapter": "labs.lab_02.web_adapter:Lab02Adapter",
+  "previous_stage": "lab_01",
+  "capabilities": ["model_call", "validation", "state_update"],
+  "now_you_can": ["Produce a validated fit/gap report.", "Preserve profile and JD task state.", "Reject malformed model output."],
+  "examples": [
+    {
+      "id": "lab_02_fit_gap",
+      "prompt": "Based on my profile and this JD, explain my strengths, gaps, missing information, and recommended next steps.",
+      "observe": ["Validated FitGapReport fields", "Schema validation event", "State transition to report_generated"],
+      "compare_note": "Run the same case in Lab 1: the prose may be useful, but code cannot rely on required fields or types."
+    },
+    {
+      "id": "lab_02_missing_info",
+      "prompt": "What required information is missing before I tailor my application, and what state should we preserve?",
+      "observe": ["missing_info array", "recommended_next_steps array", "Portable report artifact"],
+      "compare_note": "Lab 1 can mention missing facts, but cannot guarantee a machine-readable missing_info field."
+    }
+  ],
+  "still_cannot": "Each turn regenerates the canonical fit/gap report; this Lab does not answer arbitrary follow-up questions. The agent only knows the resume/JD you supplied and cannot fetch a webpage or control external actions."
+}
