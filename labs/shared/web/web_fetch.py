@@ -3,7 +3,9 @@ from __future__ import annotations
 import ipaddress
 import re
 import socket
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit, urlunsplit
@@ -23,6 +25,20 @@ class FetchedWebPage:
     url: str
     title: str
     text: str
+
+
+_FROZEN_WEB_PAGES: ContextVar[dict[str, FetchedWebPage | Exception] | None] = ContextVar(
+    "frozen_web_pages", default=None
+)
+
+
+@contextmanager
+def frozen_web_pages(pages: dict[str, FetchedWebPage | Exception]) -> Iterator[None]:
+    token = _FROZEN_WEB_PAGES.set(pages)
+    try:
+        yield
+    finally:
+        _FROZEN_WEB_PAGES.reset(token)
 
 
 def normalize_web_url(value: str) -> str:
@@ -95,6 +111,14 @@ def fetch_web_page(
     client: httpx.Client | None = None,
     resolver: Callable[..., list] = socket.getaddrinfo,
 ) -> FetchedWebPage:
+    current_url = normalize_web_url(value)
+    frozen = _FROZEN_WEB_PAGES.get()
+    if frozen and current_url in frozen:
+        cached = frozen[current_url]
+        if isinstance(cached, Exception):
+            raise cached
+        return cached
+
     owned_client = client is None
     http_client = client or httpx.Client(
         timeout=httpx.Timeout(10.0, connect=5.0),
@@ -103,7 +127,6 @@ def fetch_web_page(
         trust_env=False,
         headers={"User-Agent": "HarnessEngineeringLab/1.0 (+local educational fetcher)"},
     )
-    current_url = normalize_web_url(value)
     try:
         for redirect_count in range(MAX_REDIRECTS + 1):
             current_url, addresses = resolve_public_web_url(current_url, resolver=resolver)

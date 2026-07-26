@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import uuid
+from dataclasses import replace
 from time import perf_counter
 
 from labs.shared.config import load_settings
 from labs.shared.web.contracts import ChatRequest, ChatResponse, HarnessEvent
 from labs.shared.web.errors import StageExecutionError
 from labs.shared.web.materials import MaterialStore
+from labs.shared.web.model_io import model_io_details
 from labs.shared.web.tracing import write_run_trace
 
 
@@ -29,6 +31,7 @@ class Lab01Adapter:
             if record["kind"] in {"candidate_profile", "job_description"}
         ]
         messages = build_model_messages(request, records)
+        user_request = messages[-1]["content"]
         settings = load_settings()
         client = ModelClient(settings)
         started = perf_counter()
@@ -51,6 +54,7 @@ class Lab01Adapter:
                         "message_count": len(messages),
                         "roles": [message["role"] for message in messages],
                         "material_ids": [record["material_id"] for record in records],
+                        **model_io_details(settings, messages, user_request),
                     },
                 )
             ]
@@ -75,6 +79,15 @@ class Lab01Adapter:
                     "material_ids": [record["material_id"] for record in records],
                     "response_characters": len(assistant_text),
                     "estimated_tokens": client.last_metadata.get("estimated_tokens"),
+                    **model_io_details(
+                        replace(
+                            settings,
+                            model=client.last_metadata.get("model", settings.model),
+                        ),
+                        messages,
+                        user_request,
+                        assistant_text,
+                    ),
                 },
             )
         ]
@@ -130,4 +143,9 @@ def build_model_messages(request: ChatRequest, records: list[dict]) -> list[dict
             "Answer the user's request.\n\n" + raw_context
         ),
     }
-    return [system_message, *[message.model_dump() for message in request.messages]]
+    current_request = next(
+        message
+        for message in reversed(request.messages)
+        if message.role == "user"
+    )
+    return [system_message, current_request.model_dump()]

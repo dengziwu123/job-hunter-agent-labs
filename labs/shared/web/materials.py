@@ -25,6 +25,19 @@ class MaterialStore:
     def __init__(self, root: Path | None = None) -> None:
         self.root = root or ROOT_DIR / ".runtime" / "job_materials"
 
+    def seed_workspace(self, workspace_id: str, records: list[dict[str, Any]]) -> None:
+        """Seed an isolated workspace with an immutable material snapshot."""
+        workspace = self._workspace(workspace_id)
+        workspace.mkdir(parents=True, exist_ok=True)
+        for record in records:
+            material_id = record["material_id"]
+            if not VALID_ID.fullmatch(material_id):
+                raise ValueError("Invalid material id.")
+            self._record_path(workspace, material_id).write_text(
+                json.dumps(record, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
     def create_text(
         self,
         workspace_id: str,

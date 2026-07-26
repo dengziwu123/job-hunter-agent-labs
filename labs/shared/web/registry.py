@@ -13,6 +13,7 @@ LABS_DIR = Path(__file__).resolve().parents[2]
 class StageRegistration:
     public: StagePublic
     adapter: str
+    effective_capabilities: frozenset[str]
 
 
 def load_registry() -> dict[str, StageRegistration]:
@@ -23,5 +24,18 @@ def load_registry() -> dict[str, StageRegistration]:
         public = StagePublic.model_validate(raw_stage)
         if public.id != manifest_path.parent.name:
             raise ValueError(f"Stage manifest id must match its Lab directory: {manifest_path}")
-        registry[public.id] = StageRegistration(public=public, adapter=adapter)
+        if public.previous_stage and public.previous_stage not in registry:
+            # A progressive package cannot run this stage or any descendant
+            # without the code and inherited capabilities from its predecessor.
+            continue
+        inherited = (
+            registry[public.previous_stage].effective_capabilities
+            if public.previous_stage
+            else frozenset()
+        )
+        registry[public.id] = StageRegistration(
+            public=public,
+            adapter=adapter,
+            effective_capabilities=inherited | frozenset(public.capabilities),
+        )
     return registry
