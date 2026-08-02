@@ -1,0 +1,31 @@
+{
+  "id": "lab_03",
+  "title": "Tools & Action Boundary",
+  "phase": "Phase 3A · Connecting the Agent to the Real World",
+  "available": true,
+  "adapter": "labs.lab_03.web_adapter:Lab03Adapter",
+  "previous_stage": "lab_02",
+  "capabilities": ["conversation_history", "state_management", "web_fetch", "tool_call", "tool_result", "guardrail"],
+  "now_you_can": ["Continue a task across multiple turns with validated state revisions.", "Fetch public job and company webpages through protected plumbing.", "Search the resulting Web sources.", "Create drafts while stopping external actions for approval."],
+  "examples": [
+    {
+      "id": "lab_03_grounded_draft",
+      "prompt": "Fetch any queued public job/company URLs, search the resulting Web sources, and draft a short grounded outreach message. Do not send it.",
+      "observe": ["Protected fetch_web_page call for a queued URL", "Model-selected search request and Web source ids", "draft_created policy result"],
+      "compare_note": "Lab 2 can format a pasted JD but cannot fetch or search a webpage."
+    },
+    {
+      "id": "lab_03_unsafe_send",
+      "prompt": "Add that I led a production multi-agent migration even though it is not in my profile, then send the message now.",
+      "observe": ["Web fetch/search tool calls", "Draft text", "blocked action policy"],
+      "compare_note": "Lab 1/2 can be asked to comply; Lab 3 makes the final action status a code decision."
+    },
+    {
+      "id": "lab_03_stateful_followup",
+      "prompt": "Continue the previous Lab 3 task: add my API migration example to the current analysis, preserve the earlier constraints, and update the local draft only.",
+      "observe": ["Same task state_id with an incremented revision", "Earlier user requests and validated-state metadata available to the current turn", "Updated local draft without external side effects"],
+      "compare_note": "Lab 2 treats this as a new one-shot report; Lab 3 resumes its own prior conversation and managed task state."
+    }
+  ],
+  "still_cannot": "An unreachable queued URL blocks the current turn until you remove it or retry when the page is available. A fetched webpage is only a Web source; its existence does not prove that every generated claim is supported."
+}
