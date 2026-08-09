@@ -22,18 +22,48 @@ APPROVAL_REQUIRED_ACTIONS = {"send_email", "apply_job", "publish_profile", "upda
 
 
 def classify_action(action_type: str, content: str) -> DraftAction:
-    # TODO(lab_03): implement the draft-only action boundary.
-    #
-    # Expected behavior:
-    # - SAFE_DRAFT_ACTIONS return status="draft_created"
-    # - APPROVAL_REQUIRED_ACTIONS return status="needs_approval"
-    # - fake experience or unsupported claims return status="blocked"
-    # - unknown external actions should not execute anything
+    """Classify an action without performing any external side effect."""
+    lowered_content = content.lower()
+    unsupported_claim_markers = (
+        "even though it is not",
+        "not in my profile",
+        "not in my resume",
+        "fake experience",
+        "fabricat",
+        "invented experience",
+        "unsupported claim",
+        "without evidence",
+    )
+
+    if any(marker in lowered_content for marker in unsupported_claim_markers):
+        return DraftAction(
+            action_type=action_type,
+            content=content,
+            status="blocked",
+            reason="The action contains an unsupported or fabricated experience claim.",
+        )
+
+    if action_type in SAFE_DRAFT_ACTIONS:
+        return DraftAction(
+            action_type=action_type,
+            content=content,
+            status="draft_created",
+            reason="This action is limited to a local draft and does not affect external systems.",
+        )
+
+    if action_type in APPROVAL_REQUIRED_ACTIONS:
+        return DraftAction(
+            action_type=action_type,
+            content=content,
+            status="needs_approval",
+            reason="This action could affect an external system and requires approval.",
+        )
+
     return DraftAction(
         action_type=action_type,
         content=content,
-        status="draft_created",
-        reason="TODO: policy not implemented yet.",
+        status="needs_approval",
+        reason="Unknown actions are held for approval and are never executed automatically.",
     )
 
 

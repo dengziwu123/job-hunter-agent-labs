@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
+from uuid import uuid4
 
 from pydantic import BaseModel, ConfigDict
 
@@ -33,9 +34,28 @@ def advance_task_state(
     action_status: str,
     run_id: str,
 ) -> ManagedTaskState:
-    # TODO(lab_03): create revision 1 when previous is None. Otherwise validate
-    # the previous state, keep its state_id, increment revision, append a bounded
-    # copy of only the current user request, retain at most
-    # MAX_STATE_USER_REQUESTS, and replace the report/tool progress with this
-    # run's validated values.
-    raise NotImplementedError("TODO(lab_03): advance the persisted task state.")
+    validated_report = FitGapReport.model_validate(report)
+    bounded_request = user_request[:MAX_STATE_USER_REQUEST_CHARACTERS]
+
+    if previous is None:
+        state_id = f"state_{uuid4().hex}"
+        revision = 1
+        user_requests = [bounded_request]
+    else:
+        previous_state = ManagedTaskState.model_validate(previous)
+        state_id = previous_state.state_id
+        revision = previous_state.revision + 1
+        user_requests = [*previous_state.user_requests, bounded_request][
+            -MAX_STATE_USER_REQUESTS:
+        ]
+
+    return ManagedTaskState(
+        state_id=state_id,
+        revision=revision,
+        user_requests=user_requests,
+        report=validated_report,
+        source_ids=list(source_ids),
+        action_status=action_status,
+        latest_run_id=run_id,
+        validation_status="valid",
+    )
