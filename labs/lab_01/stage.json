@@ -1,13 +1,14 @@
 {
   "id": "lab_01",
   "title": "Raw Model Baseline",
-  "phase": "Phase 1 · What is a Harness?",
+  "phase": "Phase 1 · What is Harness?",
   "available": true,
   "adapter": "labs.lab_01.web_adapter:Lab01Adapter",
+  "installation_markers": ["src/model_client.py"],
   "capabilities": ["model_call", "raw_context", "call_trace"],
   "now_you_can": [
     "Chat with a real LLM about a resume and job description.",
-    "Ask flexible follow-up questions in the same conversation.",
+    "Ask separate one-shot questions about the current materials.",
     "Inspect exactly which model component was called."
   ],
   "examples": [

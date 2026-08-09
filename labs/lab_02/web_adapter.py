@@ -7,6 +7,10 @@ from time import perf_counter
 
 from pydantic import ValidationError
 
+from labs.lab_01.web_adapter import (
+    complete_model_messages,
+    uses_course_provider_compatibility_bridge,
+)
 from labs.shared.artifacts import artifact_path, relative_artifact_path, write_json
 from labs.shared.config import Settings, load_settings
 from labs.shared.web.material_inputs import (
@@ -22,26 +26,74 @@ from labs.shared.web.tracing import write_run_trace
 
 
 class ModelIoRecorder:
-    def __init__(self, delegate, *, settings: Settings) -> None:
+    def __init__(
+        self,
+        delegate,
+        *,
+        settings: Settings,
+        legacy_user_request: str | None = None,
+    ) -> None:
         self.delegate = delegate
         self.settings = settings
+        self.legacy_user_request = legacy_user_request
+        self.provider_bridge = uses_course_provider_compatibility_bridge(delegate, settings)
         self.messages: list[dict[str, str]] = []
         self.raw_model_output: str | None = None
 
     def complete(self, messages: list[dict[str, str]]) -> str:
-        self.messages = messages
-        self.raw_model_output = self.delegate.complete(messages)
+        effective_messages = add_legacy_user_request(messages, self.legacy_user_request)
+        self.messages = effective_messages
+        self.raw_model_output = complete_model_messages(
+            self.delegate,
+            self.settings,
+            effective_messages,
+        )
         return self.raw_model_output
 
     def details(self, user_request: str) -> dict[str, str]:
         if not self.messages:
             return {}
-        return model_io_details(
+        details = model_io_details(
             self.settings,
             self.messages,
             user_request,
             self.raw_model_output,
         )
+        details["provider_route"] = (
+            "course_provider_compatibility_bridge"
+            if self.provider_bridge
+            else (
+                "student_gemini_model_client"
+                if self.settings.provider == "gemini"
+                else "course_provider_plumbing_in_model_client"
+            )
+        )
+        return details
+
+    @property
+    def component(self) -> str:
+        if self.provider_bridge:
+            return "labs.shared.providers.complete_messages"
+        return "labs.lab_01.src.model_client.ModelClient"
+
+
+def add_legacy_user_request(
+    messages: list[dict[str, str]],
+    user_request: str | None,
+) -> list[dict[str, str]]:
+    """Inject Lab 3 context when an older Lab 2 entry point cannot accept it."""
+    if user_request is None:
+        return messages
+    context = f"Current user request and conversation context:\n{user_request}"
+    effective_messages = [dict(message) for message in messages]
+    for index in range(len(effective_messages) - 1, -1, -1):
+        if effective_messages[index].get("role") == "user":
+            effective_messages[index]["content"] = (
+                f"{effective_messages[index].get('content', '')}\n\n{context}"
+            )
+            return effective_messages
+    effective_messages.append({"role": "user", "content": context})
+    return effective_messages
 
 
 class Lab02Adapter:
@@ -137,16 +189,18 @@ def build_structured_capability(
     filename = "job_prep_report.json" if stage_id == "lab_02" else "structured_report.json"
     report_path = artifact_path(stage_id, "runs", run_id, filename)
     settings = load_settings()
+    run_parameters = inspect.signature(run_from_objects).parameters
+    legacy_user_request = None if "user_request" in run_parameters else user_request
     model_io_recorder = ModelIoRecorder(
         ModelClient(settings),
         settings=settings,
+        legacy_user_request=legacy_user_request,
     )
     report_client = GeminiStructuredReportClient(
         settings,
         model_client=model_io_recorder,  # type: ignore[arg-type]
     )
     started = perf_counter()
-    run_parameters = inspect.signature(run_from_objects).parameters
     run_kwargs = {
         "client": report_client,
         "output_path": report_path,
@@ -169,7 +223,7 @@ def build_structured_capability(
                     sequence=len(events) + 1,
                     type="model_call",
                     status="completed" if model_completed else "failed",
-                    component="labs.lab_01.src.model_client.ModelClient",
+                    component=model_io_recorder.component,
                     operation="complete",
                     summary=(
                         "The model returned output before structured parsing or validation failed"
@@ -196,15 +250,32 @@ def build_structured_capability(
                 sequence=len(events) + 1,
                 type="model_call",
                 status="completed",
-                component="labs.lab_01.src.model_client.ModelClient",
+                component=model_io_recorder.component,
                 operation="complete",
-                summary="Called the Lab 1 model boundary to request report JSON",
+                summary=(
+                    "Called the course provider compatibility bridge to request report JSON"
+                    if model_io_recorder.provider_bridge
+                    else (
+                        "Called the Lab 1 Gemini model boundary to request report JSON"
+                        if settings.provider == "gemini"
+                        else "Called the Lab 1 boundary with course provider plumbing for report JSON"
+                    )
+                ),
                 duration_ms=duration_ms,
                 details={
                     "called_by": "labs.lab_02.src.run_structured.GeminiStructuredReportClient",
                     "profile_id": profile.id,
                     "job_description_id": job_description.id,
-                    "input_fields": ["candidate_profile", "job_description", "user_request"],
+                    "input_fields": [
+                        "candidate_profile",
+                        "job_description",
+                        *(
+                            ["user_request"]
+                            if "user_request" in run_kwargs or legacy_user_request is not None
+                            else []
+                        ),
+                    ],
+                    "legacy_user_request_compatibility": legacy_user_request is not None,
                     "response_fields": sorted(report),
                     **model_io,
                     "validated_output": json.dumps(report, ensure_ascii=False, indent=2),

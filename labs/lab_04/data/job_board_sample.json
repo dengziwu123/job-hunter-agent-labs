@@ -1,0 +1,677 @@
+{
+  "greenhouse": {
+    "jobs": [
+      {
+        "absolute_url": "https://stripe.com/jobs/search?gh_jid=8023928",
+        "data_compliance": [
+          {
+            "type": "gdpr",
+            "requires_consent": false,
+            "requires_processing_consent": false,
+            "requires_retention_consent": false,
+            "retention_period": null,
+            "demographic_data_consent_applies": false
+          }
+        ],
+        "education": "education_required",
+        "internal_job_id": 3478585,
+        "location": {
+          "name": "London"
+        },
+        "metadata": null,
+        "id": 8023928,
+        "updated_at": "2026-08-06T12:10:12-04:00",
+        "requisition_id": "See Opening ID",
+        "title": "Account Executive, Bridge",
+        "company_name": "Stripe",
+        "first_published": "2026-07-30T06:59:38-04:00",
+        "language": "en",
+        "application_deadline": null,
+        "content": "&lt;h2&gt;&lt;strong&gt;Who we are &lt;/strong&gt;&lt;/h2&gt;\n&lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Stripe is a financial infrastructure platform for businesses. Millions of companies - from the world’s largest enterprises to the most ambitious startups - use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone&#39;s reach while doing the most important work of your career.&lt;/span&gt;&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;About the team&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;The Account Management team at Bridge is dedicated to the growth, retention, and expansion of key customers. Our Enterprise Account Management team focuses on driving measurable expansion across a portfolio of strategic enterprise customers through deep account knowledge, flawless technical execution and strong cross-functional partnership.&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Why Bridge&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Join a team that values clear thinking, quantitative rigor, and customer obsession. At Bridge you’ll own meaningful customer outcomes, operate with autonomy, and have the opportunity to shape how we scale revenue across high-potential accounts.&lt;/p&gt;\n&lt;h2&gt;&lt;strong&gt;What yo",
+        "departments": [
+          {
+            "id": 236787,
+            "name": "8589 Bridge - S&M",
+            "child_ids": [],
+            "parent_id": 85336
+          }
+        ],
+        "offices": [
+          {
+            "id": 87009,
+            "name": "United Kingdom Locations",
+            "location": null,
+            "child_ids": [
+              186827,
+              80466,
+              80465
+            ],
+            "parent_id": 17446
+          }
+        ],
+        "ai_disclaimer": null,
+        "include_ai_disclaimer": false,
+        "ai_opt_out_request_url": "http://app.greenhouse.io/ai_opt_out_request/job_post/8023928/ai_opt_out"
+      },
+      {
+        "absolute_url": "https://stripe.com/jobs/search?gh_jid=8077887",
+        "data_compliance": [
+          {
+            "type": "gdpr",
+            "requires_consent": false,
+            "requires_processing_consent": false,
+            "requires_retention_consent": false,
+            "retention_period": null,
+            "demographic_data_consent_applies": false
+          }
+        ],
+        "education": "education_required",
+        "internal_job_id": 3499744,
+        "location": {
+          "name": "SF, NYC, SEA, CHI"
+        },
+        "metadata": null,
+        "id": 8077887,
+        "updated_at": "2026-08-06T12:10:17-04:00",
+        "requisition_id": "See Opening ID",
+        "title": "Account Executive, Bridge ",
+        "company_name": "Stripe",
+        "first_published": "2026-07-22T13:15:53-04:00",
+        "language": "en",
+        "application_deadline": null,
+        "content": "&lt;h2&gt;&lt;strong&gt;Who we are &lt;/strong&gt;&lt;/h2&gt;\n&lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Stripe is a financial infrastructure platform for businesses. Millions of companies - from the world’s largest enterprises to the most ambitious startups - use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone&#39;s reach while doing the most important work of your career.&lt;/span&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;About the Team&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;The Account Management team at Bridge is dedicated to the growth, retention, and expansion of key customers. Our Scaled Account Management team focuses on driving measurable expansion across a broad portfolio of mid-market and high-growth customers through data-driven strategies, efficient processes, and strong cross-functional partnership.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;What You&#39;ll Do&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;As a Scaled Account Manager at Bridge you will own a book of existing accounts and be responsible for expanding revenue, identifying product gaps and driving product adoption, preventing churn and ensuring renewals at scale. You will combine consultative selli",
+        "departments": [
+          {
+            "id": 86075,
+            "name": "1642 Product Sales - MaaS",
+            "child_ids": [],
+            "parent_id": 85336
+          }
+        ],
+        "offices": [
+          {
+            "id": 65234,
+            "name": "US",
+            "location": null,
+            "child_ids": [
+              89623,
+              249942,
+              249943,
+              230657,
+              61413,
+              80440,
+              344486,
+              83778,
+              61414,
+              83767,
+              83768,
+              83776,
+              83769,
+              83770,
+              83771,
+              83772,
+              83773,
+              83774,
+              89624,
+              83789,
+              83775,
+              83777,
+              83779,
+              83780,
+              83820,
+              83781,
+              83782,
+              83783,
+              83784,
+              83785,
+              83786,
+              83787,
+              83821,
+              83788,
+              83790,
+              83791,
+              83792,
+              83793,
+              83794,
+              83854,
+              83861,
+              83795,
+              83796,
+              83797,
+              83831,
+              83798,
+              83799,
+              83856,
+              83800,
+              83801,
+              83819,
+              83802,
+              83850,
+              83803,
+              83804,
+              83805,
+              83806,
+              83807,
+              83808,
+              83809,
+              83810,
+              83811,
+              83812,
+              83813,
+              83815,
+              83817,
+              83822,
+              83824,
+              83846,
+              83825,
+              83829,
+              83830,
+              65238,
+              83834,
+              83849,
+              83859,
+              83835,
+              83836,
+              83837,
+              83839,
+              83840,
+              83841,
+              83842,
+              83843,
+              83844,
+              83847,
+              83848,
+              83851,
+              83852,
+              83853,
+              83855,
+              83857,
+              83858,
+              83860,
+              83862,
+              83814,
+              83818,
+              83823,
+              83826,
+              83827,
+              83828,
+              83832,
+              83833,
+              83816,
+              85342,
+              83838,
+              83845,
+              223073,
+              265365,
+              16654
+            ],
+            "parent_id": 673
+          }
+        ],
+        "ai_disclaimer": null,
+        "include_ai_disclaimer": false,
+        "ai_opt_out_request_url": "http://app.greenhouse.io/ai_opt_out_request/job_post/8077887/ai_opt_out"
+      },
+      {
+        "absolute_url": "https://stripe.com/jobs/search?gh_jid=8042978",
+        "data_compliance": [
+          {
+            "type": "gdpr",
+            "requires_consent": false,
+            "requires_processing_consent": false,
+            "requires_retention_consent": false,
+            "retention_period": null,
+            "demographic_data_consent_applies": false
+          }
+        ],
+        "education": "education_required",
+        "internal_job_id": 3486109,
+        "location": {
+          "name": "Japan"
+        },
+        "metadata": null,
+        "id": 8042978,
+        "updated_at": "2026-08-06T12:10:14-04:00",
+        "requisition_id": "See Opening ID",
+        "title": "Account Executive, Commercial Grower (Japanese Fluency)",
+        "company_name": "Stripe",
+        "first_published": "2026-07-02T03:24:50-04:00",
+        "language": "ja",
+        "application_deadline": null,
+        "content": "&lt;h2&gt;&lt;strong&gt;Who we are&lt;/strong&gt;&lt;/h2&gt;\n&lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;Stripe is a financial infrastructure platform for businesses. Millions of companies from the world’s largest enterprises to the most ambitious startups use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone’s reach while doing the most important work of your career.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;About the team&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;The Commercial (Mid-Market) Grower team is a highly consultative group that manages relationships with and is responsible for the growth and retention of Stripe’s fastest growing users.&lt;/p&gt;\n&lt;h2&gt;&lt;strong&gt;What you’ll do&lt;/strong&gt;&lt;/h2&gt;\n&lt;p&gt;As an Account Executive (Grower, Commercial), you’ll identify opportunities for our users to get the most out of Stripe by quickly understanding our users’ needs in order for them to grow with us. We’re looking for a well-rounded strategic operator who is capable of engaging in business-level and technical conversations at multiple levels of the organisation, including Founders, CTO, COO, and CFO in order to drive commercial outcomes. You are used to building value in competitive situations and enjoy working on ",
+        "departments": [
+          {
+            "id": 81432,
+            "name": "1195 Account Executives (APAC)",
+            "child_ids": [],
+            "parent_id": 81963
+          }
+        ],
+        "offices": [
+          {
+            "id": 87012,
+            "name": "Japan Locations",
+            "location": null,
+            "child_ids": [
+              80448,
+              80447
+            ],
+            "parent_id": 4260
+          }
+        ],
+        "ai_disclaimer": null,
+        "include_ai_disclaimer": false,
+        "ai_opt_out_request_url": "http://app.greenhouse.io/ai_opt_out_request/job_post/8042978/ai_opt_out"
+      },
+      {
+        "absolute_url": "https://stripe.com/jobs/search?gh_jid=7789539",
+        "data_compliance": [
+          {
+            "type": "gdpr",
+            "requires_consent": false,
+            "requires_processing_consent": false,
+            "requires_retention_consent": false,
+            "retention_period": null,
+            "demographic_data_consent_applies": false
+          }
+        ],
+        "education": "education_required",
+        "internal_job_id": 3407094,
+        "location": {
+          "name": "Japan"
+        },
+        "metadata": null,
+        "id": 7789539,
+        "updated_at": "2026-08-06T12:10:01-04:00",
+        "requisition_id": "See Opening ID",
+        "title": "Account Executive, Commercial Hunter (Japanese Fluency)",
+        "company_name": "Stripe",
+        "first_published": "2026-04-17T00:47:42-04:00",
+        "language": "ja",
+        "application_deadline": null,
+        "content": "&lt;h2&gt;&lt;strong&gt;Who we are&lt;/strong&gt;&lt;/h2&gt;\n&lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;Stripe is a financial infrastructure platform for businesses. Millions of companies—from the world’s largest enterprises to the most ambitious startups—use Stripe to accept payments, grow their revenue, and accelerate new business opportunities. Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead. That means you have an unprecedented opportunity to put the global economy within everyone’s reach while doing the most important work of your career.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;About The Team&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;A Stripe Commercial (Mid-Market) Account Executive partners with high-growth, under-penetrated mid-market businesses to help them scale and modernize their financial infrastructure. These companies—often tech-forward, founder-led, and rapidly scaling—represent Stripe&#39;s next generation of breakout users.&lt;/p&gt;\n&lt;p&gt;Stripe Commercial AEs are responsible for both acquiring new users and expanding existing relationships. They guide companies through the full sales lifecycle, uncovering pain points, aligning on solutions across the Stripe product suite, and driving long-term value. Commercial AEs serve as strategic advisors, helping users unlock new revenue, streamline operations, and launch ambitious new products on top of the Stripe platform.&lt;/p&gt;\n&lt;h2&gt;&lt;s",
+        "departments": [
+          {
+            "id": 81432,
+            "name": "1195 Account Executives (APAC)",
+            "child_ids": [],
+            "parent_id": 81963
+          }
+        ],
+        "offices": [
+          {
+            "id": 87012,
+            "name": "Japan Locations",
+            "location": null,
+            "child_ids": [
+              80448,
+              80447
+            ],
+            "parent_id": 4260
+          }
+        ],
+        "ai_disclaimer": null,
+        "include_ai_disclaimer": false,
+        "ai_opt_out_request_url": "http://app.greenhouse.io/ai_opt_out_request/job_post/7789539/ai_opt_out"
+      }
+    ],
+    "meta": {
+      "total": 4
+    }
+  },
+  "lever": [
+    {
+      "additionalPlain": "Spotify is an equal opportunity employer. You are welcome at Spotify for who you are, no matter where you come from, what you look like, or what’s playing in your headphones. Our platform is for everyone, and so is our workplace. The more voices we have represented and amplified in our business, the more we will all thrive, contribute, and be forward-thinking! So bring us your personal experience, your perspectives, and your background. It’s in our differences that we will find the power to keep revolutionizing the way the world listens.\n \nAt Spotify, we are passionate about inclusivity and making sure our entire recruitment process is accessible to everyone. We have ways to request reasonable accommodations during the interview process and help assist in what you need. If you need accommodations at any stage of the application or interview process, please let us know - we’re here to support you in any way we can.\n",
+      "additional": "<div><span style=\"font-size: 11pt;\">Spotify is an equal opportunity employer. You are welcome at Spotify for who you are, no matter where you come from, what you look like, or what’s playing in your headphones. Our platform is for everyone, and so is our workplace. The more voices we have represented and amplified in our business, the more we will all thrive, contribute, and be forward-thinking! So bring us your personal experience, your perspectives, and your background. It’s in our differences that we will find the power to keep revolutionizing the way the world listens.</span></div>\n<div>&nbsp;</div>\n<div><span style=\"font-size: 11pt;\">At Spotify, we are passionate about inclusivity and making sure our entire recruitment process is accessible to everyone. We have ways to request reasonable accommodations during the interview process and help assist in what you need. If you need accommodations at any stage of the application or interview process, please let us know - we’re here to support you in any way we can.</span></div>",
+      "categories": {
+        "commitment": "Permanent",
+        "department": "Advertising",
+        "location": "London",
+        "team": "Advertising Sales - Emerging and Scaled Sales",
+        "allLocations": [
+          "London"
+        ]
+      },
+      "createdAt": 1784569799619,
+      "descriptionPlain": "Sell what you love. For us and millions of users across the globe, that’s Spotify. Join the Sales team and you’ll build the relationships that help grow our business in existing markets and beyond. We don’t just sell creative solutions to our clients and partners, we help to shape them; using our expert knowledge of ad products, sales channels and the industry to impact the way the world experiences music and podcasts. \n\n\nWe are looking for a Vendor Lead to serve as the primary connection between our vendor support teams and the broader Spotify Ads organization. You'll also serve as the programmatic subject matter expert within Vendor Operations, helping ensure technical excellence, scalable enablement, and consistent support across our EMEA and JAPAC Markets. Working across vendor partners and internal stakeholders, you'll identify opportunities for improvement, lead operational initiatives, and help shape how frontline support is delivered across our advertising business.\n",
+      "description": "<div>Sell what you love. For us and millions of users across the globe, that’s Spotify. Join the Sales team and you’ll build the relationships that help grow our business in existing markets and beyond. We don’t just sell creative solutions to our clients and partners, we help to shape them; using our expert knowledge of ad products, sales channels and the industry to impact the way the world experiences music and podcasts.&nbsp;</div><div><br></div><div>We are looking for a Vendor Lead to serve as the primary connection between our vendor support teams and the broader Spotify Ads organization. You'll also serve as the programmatic subject matter expert within Vendor Operations, helping ensure technical excellence, scalable enablement, and consistent support across our EMEA and JAPAC Markets. Working across vendor partners and internal stakeholders, you'll identify opportunities for improvement, lead operational initiatives, and help shape how frontline support is delivered across our advertising business.</div>",
+      "id": "890b2c0f-f46f-4a4b-bb73-3a6af6e0edd5",
+      "lists": [
+        {
+          "text": "What You'll Do",
+          "content": "\n<li>Serve as the programmatic product expert within the vendor operations function, partnering with internal regional leads as a peer on product knowledge</li>\n<li>Identify technical and functional capability gaps across the vendor support organization and partner with training teams to develop targeted enablement programs that strengthen programmatic expertise.</li>\n<li>Monitor key operational metrics and quality indicators to identify trends, measure performance, and inform support program improvements.</li>\n<li>Execute on priority initiatives and workstreams on behalf of management, stepping in where focus is needed across the vendor support model.</li>\n<li>Identify process, knowledge or skill gaps within the vendor support team and propose actionable solutions.</li>\n<li>Manage complex escalations with Tier 2 Support, Engineering, Product, and Ad Product Quality teams, ensuring issues are investigated, communicated effectively, and resolved in a timely manner.</li>\n<li>Partner with Sales, Customer Success, and other GTM teams to gather feedback, prioritize improvements, and continuously evolve the vendor support program.</li>\n<li>Identify operational inefficiencies and recurring support challenges, and drive solutions that improve quality, consistency, and resolution times.</li>\n<li>Own and evolve the vendor enablement framework, including onboarding, continuous learning programs, knowledge base content, process documentation, and training materials.</li>\n<li>Support the QA process for support agents by reviewing cases, identifying areas for improvement, and flagging opportunities for additional coaching or documentation updates.</li>\n<li>Work with cross-functional stakeholders such as Product, Product Marketing, Finance, and Sales System and Tooling to initiate updates in the team’s workflows or processes.</li>\n"
+        },
+        {
+          "text": "Who You Are",
+          "content": "\n<li>You have 5+ years of experience in customer support operations, program management, vendor management, or a related field, including 3+ years working within the programmatic advertising ecosystem</li>\n<li>You have hands-on experience working with and managing external vendor or BPO support teams, and you understand the nuances of operating through outsourced support partners.</li>\n<li>You have deep hands-on experience with programmatic advertising operations, including campaign troubleshooting, DSP and SSP integrations, deal setup, auction mechanics, and campaign delivery.</li>\n<li>You have the ability to assess the technical accuracy of vendor case resolutions, not just communication quality&nbsp;</li>\n<li>You have experience working with global teams that span across different time zones.</li>\n<li>You are highly proactive, with a strong ability to identify operational opportunities before they become issues.</li>\n<li>You build strong relationships across functions and are comfortable influencing stakeholders across Sales, Product, Engineering, Operations, and external vendor organizations.</li>\n<li>You have experience driving process improvements and operational change across complex support organizations.</li>\n<li>You are detail-oriented, organized, and rigorous in maintaining documentation and processes.</li>\n<li>You are an excellent communicator who can translate complexity for a range of stakeholders, from frontline agents to senior leadership.</li>\n<li>You are comfortable working in a fast-moving environment where some structures are still being built, and you thrive when given the autonomy to shape how things work.</li>\n"
+        },
+        {
+          "text": "Where You'll Be",
+          "content": "\n<li>This role can be based in London, UK</li>\n<li>We offer you the flexibility to work where you work best! There will be some in person site visits, but still allows for flexibility to work from home.&nbsp;</li>\n"
+        }
+      ],
+      "text": "Advertiser Solutions Vendor Lead - Programmatic and Direct Support",
+      "country": "GB",
+      "workplaceType": "hybrid",
+      "opening": "<div>Sell what you love. For us and millions of users across the globe, that&rsquo;s Spotify. Join the Sales team and you&rsquo;ll build the relationships that help grow our business in existing markets and beyond. We don&rsquo;t just sell creative solutions to our clients and partners, we help to shape them; using our expert knowledge of ad products, sales channels and the industry to impact the way the world experiences music and podcasts.&nbsp;</div>",
+      "openingPlain": "Sell what you love. For us and millions of users across the globe, that’s Spotify. Join the Sales team and you’ll build the relationships that help grow our business in existing markets and beyond. We don’t just sell creative solutions to our clients and partners, we help to shape them; using our expert knowledge of ad products, sales channels and the industry to impact the way the world experiences music and podcasts. \n",
+      "descriptionBody": "<div>We are looking for a Vendor Lead to serve as the primary connection between our vendor support teams and the broader Spotify Ads organization. You'll also serve as the programmatic subject matter expert within Vendor Operations, helping ensure technical excellence, scalable enablement, and consistent support across our EMEA and JAPAC Markets. Working across vendor partners and internal stakeholders, you'll identify opportunities for improvement, lead operational initiatives, and help shape how frontline support is delivered across our advertising business.</div>",
+      "descriptionBodyPlain": "We are looking for a Vendor Lead to serve as the primary connection between our vendor support teams and the broader Spotify Ads organization. You'll also serve as the programmatic subject matter expert within Vendor Operations, helping ensure technical excellence, scalable enablement, and consistent support across our EMEA and JAPAC Markets. Working across vendor partners and internal stakeholders, you'll identify opportunities for improvement, lead operational initiatives, and help shape how frontline support is delivered across our advertising business.\n",
+      "hostedUrl": "https://jobs.lever.co/spotify/890b2c0f-f46f-4a4b-bb73-3a6af6e0edd5",
+      "applyUrl": "https://jobs.lever.co/spotify/890b2c0f-f46f-4a4b-bb73-3a6af6e0edd5/apply"
+    },
+    {
+      "additional": "",
+      "additionalPlain": "",
+      "categories": {
+        "commitment": "Permanent",
+        "department": "Advertising",
+        "location": "Mumbai",
+        "team": "Advertising Sales - Enterprise",
+        "allLocations": [
+          "Mumbai"
+        ]
+      },
+      "createdAt": 1784741555280,
+      "descriptionPlain": "Sell what you love. For us and millions of users across the globe, that's Spotify. Join our Sales team and you'll build the relationships that help grow our business in existing markets and beyond. We don't just sell creative solutions to our clients and partners, we help shape them by using our expertise in advertising, media, and innovation to influence how brands connect with audiences through music, podcasts, and culture.\nWe are looking for an Agency Lead to join our India Ads business, based in Mumbai. This role is ideal for someone with a strong track record of sales leadership, agency partnership development, media trading expertise, and executive relationship management. You'll bring a passion for digital media, music, podcasts, and innovation, while helping position Spotify as the preferred audio and audience platform for leading agencies across India.\nYou'll work closely with senior agency leaders to develop long-term strategic partnerships, unlock new commercial opportunities, and drive innovative ways of working together. We're looking for someone who combines commercial acumen with curiosity, collaboration, and a genuine passion for Spotify.\n",
+      "description": "<div>\n<p data-start=\"162\" data-end=\"629\">Sell what you love. For us and millions of users across the globe, that's Spotify. Join our Sales team and you'll build the relationships that help grow our business in existing markets and beyond. We don't just sell creative solutions to our clients and partners, we help shape them by using our expertise in advertising, media, and innovation to influence how brands connect with audiences through music, podcasts, and culture.</p>\n<p data-start=\"631\" data-end=\"1074\">We are looking for an Agency Lead to join our India Ads business, based in Mumbai. This role is ideal for someone with a strong track record of sales leadership, agency partnership development, media trading expertise, and executive relationship management. You'll bring a passion for digital media, music, podcasts, and innovation, while helping position Spotify as the preferred audio and audience platform for leading agencies across India.</p>\n<p data-start=\"1076\" data-end=\"1374\">You'll work closely with senior agency leaders to develop long-term strategic partnerships, unlock new commercial opportunities, and drive innovative ways of working together. We're looking for someone who combines commercial acumen with curiosity, collaboration, and a genuine passion for Spotify.</p>\n</div>",
+      "id": "f0b5fa47-bd55-40a6-ae28-d5e873b86bbe",
+      "lists": [
+        {
+          "text": "What You'll Do",
+          "content": "<div>\n<ul data-start=\"1396\" data-end=\"2792\">\n<li data-section-id=\"1ict3y7\" data-start=\"1396\" data-end=\"1667\">Partner with the India Sales team and Head of Sales to develop strategic agency partnerships and execute annual enterprise agreements aligned to Spotify's business objectives, including commercial structures, strategic investments, incentives, and joint business plans.</li>\n<li data-section-id=\"ap8cl6\" data-start=\"1668\" data-end=\"1838\">Serve as Spotify's trading expert, providing guidance on media trading models, commercial agreements, compliance requirements, approval processes, and internal systems.</li>\n<li data-section-id=\"wf3vif\" data-start=\"1839\" data-end=\"2072\">Build and maintain executive-level relationships with senior leaders across India's leading agency holding groups and independent agencies, understanding their business priorities and identifying opportunities for long-term growth.</li>\n<li data-section-id=\"lfsq8k\" data-start=\"2073\" data-end=\"2219\">Identify and unlock new revenue opportunities while expanding existing partnerships through strategic account planning and consultative selling.</li>\n<li data-section-id=\"jcgojl\" data-start=\"2220\" data-end=\"2385\">Lead agency-focused initiatives including research partnerships, innovation sessions, creative workshops, educational programs, and thought leadership engagements.</li>\n<li data-section-id=\"1t9s7ks\" data-start=\"2386\" data-end=\"2549\">Conduct quarterly business reviews with agency partners to measure progress against commercial objectives and identify opportunities for continued collaboration.</li>\n<li data-section-id=\"1mwl1j\" data-start=\"2550\" data-end=\"2670\">Represent Spotify at key industry events, conferences, and client engagements across the Indian advertising ecosystem.</li>\n<li data-section-id=\"6g4b1v\" data-start=\"2671\" data-end=\"2792\">Collaborate closely with cross-functional teams to ensure alignment, transparency, and exceptional partner experiences.</li>\n\n<h3 data-section-id=\"1rarndv\" data-start=\"2794\" data-end=\"2809\">&nbsp;</h3>\n</ul></div>"
+        },
+        {
+          "text": "Who You Are",
+          "content": "<div>\n\n<li data-section-id=\"18rvtnp\" data-start=\"2811\" data-end=\"2942\">You have 10+ years of experience in digital advertising, media sales, agency partnerships, or marketing within the Indian market.</li>\n<li data-section-id=\"4zyqza\" data-start=\"2943\" data-end=\"3140\">You have established relationships with India's leading agency holding companies, independent agencies, and major advertisers, with a proven ability to build trusted executive-level partnerships.</li>\n<li data-section-id=\"1fan28x\" data-start=\"3141\" data-end=\"3293\">You have a deep understanding of the Indian advertising ecosystem, including media planning, strategic planning, buying, and programmatic advertising.</li>\n<li data-section-id=\"u9t5u7\" data-start=\"3294\" data-end=\"3461\">You bring extensive media trading experience and a strong understanding of commercial deal structures, agency trading models, and local market requirements in India.</li>\n<li data-section-id=\"kz1y3k\" data-start=\"3462\" data-end=\"3597\">You have experience using data, audience insights, and measurement solutions to inform commercial strategy and drive business growth.</li>\n<li data-section-id=\"1hj9uhb\" data-start=\"3598\" data-end=\"3719\">You are a strategic, entrepreneurial, and highly motivated leader who thrives in a fast-paced, high-growth environment.</li>\n<li data-section-id=\"ev8i4n\" data-start=\"3720\" data-end=\"3861\">You have a consistent track record of meeting or exceeding annual revenue targets through strategic partnerships and commercial excellence.</li>\n<li data-section-id=\"9b8pgj\" data-start=\"3862\" data-end=\"4045\">You have excellent negotiation, influencing, and problem-solving skills, with experience navigating complex commercial discussions within the Indian advertising and media landscape.</li>\n<li data-section-id=\"uz4f1c\" data-start=\"4046\" data-end=\"4180\">You communicate effectively across diverse stakeholders and enjoy collaborating across teams to deliver impactful business outcomes.</li>\n\n</div>"
+        },
+        {
+          "text": "Where You'll Be",
+          "content": "<div>\n\n<li data-section-id=\"sn1suf\" data-start=\"4203\" data-end=\"4238\">This role is based in Mumbai.</li>\n<li data-section-id=\"16mxthz\" data-start=\"4239\" data-end=\"4427\">We offer you the flexibility to work where you work best! There will be some in person meetings, but still allows for flexibility to work from home</li>\n\n</div>"
+        }
+      ],
+      "text": "Agency Development Lead, India",
+      "country": "IN",
+      "workplaceType": "onsite",
+      "opening": "",
+      "openingPlain": "",
+      "descriptionBody": "<div>\n<p data-end=\"629\" data-start=\"162\">Sell what you love. For us and millions of users across the globe, that's Spotify. Join our Sales team and you'll build the relationships that help grow our business in existing markets and beyond. We don't just sell creative solutions to our clients and partners, we help shape them by using our expertise in advertising, media, and innovation to influence how brands connect with audiences through music, podcasts, and culture.</p>\n<p data-end=\"1074\" data-start=\"631\">We are looking for an Agency Lead to join our India Ads business, based in Mumbai. This role is ideal for someone with a strong track record of sales leadership, agency partnership development, media trading expertise, and executive relationship management. You'll bring a passion for digital media, music, podcasts, and innovation, while helping position Spotify as the preferred audio and audience platform for leading agencies across India.</p>\n<p data-end=\"1374\" data-start=\"1076\">You'll work closely with senior agency leaders to develop long-term strategic partnerships, unlock new commercial opportunities, and drive innovative ways of working together. We're looking for someone who combines commercial acumen with curiosity, collaboration, and a genuine passion for Spotify.</p>\n</div>",
+      "descriptionBodyPlain": "Sell what you love. For us and millions of users across the globe, that's Spotify. Join our Sales team and you'll build the relationships that help grow our business in existing markets and beyond. We don't just sell creative solutions to our clients and partners, we help shape them by using our expertise in advertising, media, and innovation to influence how brands connect with audiences through music, podcasts, and culture.\nWe are looking for an Agency Lead to join our India Ads business, based in Mumbai. This role is ideal for someone with a strong track record of sales leadership, agency partnership development, media trading expertise, and executive relationship management. You'll bring a passion for digital media, music, podcasts, and innovation, while helping position Spotify as the preferred audio and audience platform for leading agencies across India.\nYou'll work closely with senior agency leaders to develop long-term strategic partnerships, unlock new commercial opportunities, and drive innovative ways of working together. We're looking for someone who combines commercial acumen with curiosity, collaboration, and a genuine passion for Spotify.\n",
+      "hostedUrl": "https://jobs.lever.co/spotify/f0b5fa47-bd55-40a6-ae28-d5e873b86bbe",
+      "applyUrl": "https://jobs.lever.co/spotify/f0b5fa47-bd55-40a6-ae28-d5e873b86bbe/apply"
+    },
+    {
+      "additionalPlain": "Spotify is an equal opportunity employer. You are welcome at Spotify for who you are, no matter where you come from, what you look like, or what’s playing in your headphones. Our platform is for everyone, and so is our workplace. The more voices we have represented and amplified in our business, the more we will all thrive, contribute, and be forward-thinking! So bring us your personal experience, your perspectives, and your background. It’s in our differences that we will find the power to keep revolutionizing the way the world listens.\n \nAt Spotify, we are passionate about inclusivity and making sure our entire recruitment process is accessible to everyone. We have ways to request reasonable accommodations during the interview process and help assist in what you need. If you need accommodations at any stage of the application or interview process, please let us know - we’re here to support you in any way we can.\n \n",
+      "additional": "<div><span style=\"font-size: 11pt;\">Spotify is an equal opportunity employer. You are welcome at Spotify for who you are, no matter where you come from, what you look like, or what’s playing in your headphones. Our platform is for everyone, and so is our workplace. The more voices we have represented and amplified in our business, the more we will all thrive, contribute, and be forward-thinking! So bring us your personal experience, your perspectives, and your background. It’s in our differences that we will find the power to keep revolutionizing the way the world listens.</span></div>\n<div>&nbsp;</div>\n<div><span style=\"font-size: 11pt;\">At Spotify, we are passionate about inclusivity and making sure our entire recruitment process is accessible to everyone. We have ways to request reasonable accommodations during the interview process and help assist in what you need. If you need accommodations at any stage of the application or interview process, please let us know - we’re here to support you in any way we can.</span></div>\n<div>&nbsp;</div>",
+      "categories": {
+        "commitment": "Permanent",
+        "department": "Data and Analytics",
+        "location": "Stockholm",
+        "team": "Platform",
+        "allLocations": [
+          "Stockholm",
+          "London"
+        ]
+      },
+      "createdAt": 1778685832322,
+      "descriptionPlain": "The Platform team creates the technology that enables Spotify to learn quickly and scale easily, enabling rapid growth in our users and our business around the globe. Spanning many disciplines, we work to make the business work; creating the infrastructure, tooling, frameworks, and capabilities needed to welcome a billion customers.\nWe’re looking for an Analytics Engineer II to join Spotify's Platform Central Data (PCD) squad, a cross-functional Data Engineering and Analytics Engineering team within the Platform Mission. You’ll help build and maintain trusted analytical models, metrics, and data products that power developer productivity, platform health, and leadership decision-making. Working closely with Data Engineers, Product, Engineering, and Platform partners, you’ll translate platform signals into reliable, well-modeled data assets that help Spotify ship faster and safer.\n",
+      "description": "<p data-start=\"138\" data-end=\"472\">The Platform team creates the technology that enables Spotify to learn quickly and scale easily, enabling rapid growth in our users and our business around the globe. Spanning many disciplines, we work to make the business work; creating the infrastructure, tooling, frameworks, and capabilities needed to welcome a billion customers.</p>\n<p data-start=\"494\" data-end=\"1051\">We’re looking for an Analytics Engineer II to join Spotify's Platform Central Data (PCD) squad, a cross-functional Data Engineering and Analytics Engineering team within the Platform Mission. You’ll help build and maintain trusted analytical models, metrics, and data products that power developer productivity, platform health, and leadership decision-making. Working closely with Data Engineers, Product, Engineering, and Platform partners, you’ll translate platform signals into reliable, well-modeled data assets that help Spotify ship faster and safer.</p>",
+      "id": "08d82da1-0c72-44d1-91eb-7fa22dee3d39",
+      "lists": [
+        {
+          "text": "What You\"ll Do",
+          "content": "\n<li data-section-id=\"jz3iv8\" data-start=\"1073\" data-end=\"1221\">Build and maintain analytical data models using dbt (or similar SQL-based transformation frameworks) in BigQuery for a broad set of stakeholders</li>\n<li data-section-id=\"zjzwak\" data-start=\"1222\" data-end=\"1328\">Build and operate reliable data pipelines using SQL, with a focus on testing, observability, and CI/CD</li>\n<li data-section-id=\"h6dp3y\" data-start=\"1329\" data-end=\"1440\">Help define and evolve key metrics for platform health, developer productivity, and ML/AI platform adoption</li>\n<li data-section-id=\"1n39nu3\" data-start=\"1441\" data-end=\"1584\">Partner with Data Engineers on upstream pipelines and collaborate with Product, Engineering, and Data Science to scope and deliver insights</li>\n<li data-section-id=\"16cx820\" data-start=\"1585\" data-end=\"1712\">Improve data quality, performance, and cost efficiency across pipelines and models, including troubleshooting and backfills</li>\n<li data-section-id=\"4eqcux\" data-start=\"1713\" data-end=\"1818\">Contribute to dashboards and self-serve data products that enable better decision-making across teams</li>\n<li data-section-id=\"1102a23\" data-start=\"1819\" data-end=\"1925\">Follow and contribute to data quality, testing, and documentation practices across the analytics layer</li>\n<li data-section-id=\"16e0z4q\" data-start=\"1926\" data-end=\"2021\">Participate in a fair support rotation for key datasets, pipelines, and analytical products</li>\n"
+        },
+        {
+          "text": "Who You Are",
+          "content": "\n<li data-section-id=\"k3vckz\" data-start=\"2040\" data-end=\"2138\">You have 2+ years of experience in analytics engineering, data engineering, or a related field</li>\n<li data-section-id=\"14oijre\" data-start=\"2139\" data-end=\"2204\">You have strong SQL skills and experience with data modelling</li>\n<li data-section-id=\"qsgc27\" data-start=\"2205\" data-end=\"2370\">You are experienced with dbt (or similar SQL-based transformation frameworks) and a cloud data warehouse such as BigQuery, Snowflake, Redshift, or Databricks SQL</li>\n<li data-section-id=\"bd5h9o\" data-start=\"2371\" data-end=\"2469\">You are familiar with workflow orchestration tools such as Airflow, Dagster, Prefect, or Flyte</li>\n<li data-section-id=\"1ia3qf5\" data-start=\"2470\" data-end=\"2531\">You care about data quality, reliability, and testability</li>\n<li data-section-id=\"1j3j4f2\" data-start=\"2532\" data-end=\"2617\">You are comfortable working with BI/visualisation tools such as Looker or Tableau</li>\n<li data-section-id=\"1wchy19\" data-start=\"2618\" data-end=\"2692\">You communicate clearly with both technical and non-technical partners</li>\n<li data-section-id=\"13lcnx1\" data-start=\"2693\" data-end=\"2764\">You are able to prioritize and deliver in a fast-moving environment</li>\n<li data-section-id=\"8vuqw9\" data-start=\"2765\" data-end=\"2868\">You have experience with platform or developer productivity data, experimentation, or ML/AI metrics</li>\n"
+        },
+        {
+          "text": "Where You'll Be",
+          "content": "<div>This role is based in London or Stockholm.&nbsp;</div>\n<div>&nbsp;</div>\n<div>We offer you the flexibility to work where you work best! There will be some in person meetings, but still allows for flexibility to work from home.&nbsp;</div>"
+        }
+      ],
+      "text": "Analytics Engineer II",
+      "country": "SE",
+      "workplaceType": "hybrid",
+      "opening": "",
+      "openingPlain": "",
+      "descriptionBody": "<p data-end=\"472\" data-start=\"138\">The Platform team creates the technology that enables Spotify to learn quickly and scale easily, enabling rapid growth in our users and our business around the globe. Spanning many disciplines, we work to make the business work; creating the infrastructure, tooling, frameworks, and capabilities needed to welcome a billion customers.</p>\n<p data-end=\"1051\" data-start=\"494\">We&rsquo;re looking for an Analytics Engineer II to join Spotify's Platform Central Data (PCD) squad, a cross-functional Data Engineering and Analytics Engineering team within the Platform Mission. You&rsquo;ll help build and maintain trusted analytical models, metrics, and data products that power developer productivity, platform health, and leadership decision-making. Working closely with Data Engineers, Product, Engineering, and Platform partners, you&rsquo;ll translate platform signals into reliable, well-modeled data assets that help Spotify ship faster and safer.</p>",
+      "descriptionBodyPlain": "The Platform team creates the technology that enables Spotify to learn quickly and scale easily, enabling rapid growth in our users and our business around the globe. Spanning many disciplines, we work to make the business work; creating the infrastructure, tooling, frameworks, and capabilities needed to welcome a billion customers.\nWe’re looking for an Analytics Engineer II to join Spotify's Platform Central Data (PCD) squad, a cross-functional Data Engineering and Analytics Engineering team within the Platform Mission. You’ll help build and maintain trusted analytical models, metrics, and data products that power developer productivity, platform health, and leadership decision-making. Working closely with Data Engineers, Product, Engineering, and Platform partners, you’ll translate platform signals into reliable, well-modeled data assets that help Spotify ship faster and safer.\n",
+      "hostedUrl": "https://jobs.lever.co/spotify/08d82da1-0c72-44d1-91eb-7fa22dee3d39",
+      "applyUrl": "https://jobs.lever.co/spotify/08d82da1-0c72-44d1-91eb-7fa22dee3d39/apply"
+    },
+    {
+      "additionalPlain": "The United States base range for this position is $107,483 –$153,547 USD, plus equity. The benefits available for this position include health insurance, six-month paid parental leave, 401(k) retirement plan, monthly meal allowance, 23 paid days off, paid flexible holidays, and paid sick leave. These ranges may be modified in the future.\n\n\nSpotify is an equal opportunity employer. You are welcome at Spotify for who you are, no matter where you come from, what you look like, or what’s playing in your headphones. Our platform is for everyone, and so is our workplace. The more voices we have represented and amplified in our business, the more we will all thrive, contribute, and be forward-thinking! So bring us your personal experience, your perspectives, and your background. It’s in our differences that we will find the power to keep revolutionizing the way the world listens.\n \nAt Spotify, we are passionate about inclusivity and making sure our entire recruitment process is accessible to everyone. We have ways to request reasonable accommodations during the interview process and help assist in what you need. If you need accommodations at any stage of the application or interview process, please let us know - we’re here to support you in any way we can.\n \n \n",
+      "additional": "<div>The United States base range for this position is $107,483 –$153,547 USD, plus equity. The benefits available for this position include health insurance, six-month paid parental leave, 401(k) retirement plan, monthly meal allowance, 23 paid days off, paid flexible holidays, and paid sick leave. These ranges may be modified in the future.</div><div><br></div><div><span style=\"font-size: 11pt;\">Spotify is an equal opportunity employer. You are welcome at Spotify for who you are, no matter where you come from, what you look like, or what’s playing in your headphones. Our platform is for everyone, and so is our workplace. The more voices we have represented and amplified in our business, the more we will all thrive, contribute, and be forward-thinking! So bring us your personal experience, your perspectives, and your background. It’s in our differences that we will find the power to keep revolutionizing the way the world listens.</span></div>\n<div>&nbsp;</div>\n<div><span style=\"font-size: 11pt;\">At Spotify, we are passionate about inclusivity and making sure our entire recruitment process is accessible to everyone. We have ways to request reasonable accommodations during the interview process and help assist in what you need. If you need accommodations at any stage of the application or interview process, please let us know - we’re here to support you in any way we can.</span></div>\n<div>&nbsp;</div>\n<div>&nbsp;</div>",
+      "categories": {
+        "commitment": "Permanent",
+        "department": "Engineering",
+        "location": "New York, NY",
+        "team": "Advertising R&D",
+        "allLocations": [
+          "New York, NY"
+        ]
+      },
+      "createdAt": 1773857225234,
+      "descriptionPlain": "Our mission on the Advertising Product & Technology team is to build a next generation advertising platform that aligns with our unique value proposition for audio and video. We work to scale the user experience for hundreds of millions of fans and hundreds of thousands of advertisers. This scale brings unique challenges as well as tremendous opportunities for our artists and creators.\n\n\nSell what you love. For us and millions of users across the globe, that’s Spotify. Join the Sales team and you’ll build the relationships that help grow our business in existing markets and beyond. We don’t just sell creative solutions to our clients and partners, we help to shape them; using our expert knowledge of ad products, sales channels and the industry to impact the way the world experiences music and podcasts.\nOur Advertising Product & Technology team is building the next generation advertising platform for audio and video at Spotify. We create thoughtful, non-interruptive ad experiences that power free listening for hundreds of millions of fans around the world. From display to video, our work lives across some of the most highly trafficked surfaces in the app—helping connect listeners, creators, and advertisers in meaningful ways.\n",
+      "description": "<div>Our mission on the Advertising Product &amp; Technology team is to build a next generation advertising platform that aligns with our unique value proposition for audio and video. We work to scale the user experience for hundreds of millions of fans and hundreds of thousands of advertisers. This scale brings unique challenges as well as tremendous opportunities for our artists and creators.</div><div><br></div><div>\n<p data-start=\"167\" data-end=\"647\">Sell what you love. For us and millions of users across the globe, that’s Spotify. Join the Sales team and you’ll build the relationships that help grow our business in existing markets and beyond. We don’t just sell creative solutions to our clients and partners, we help to shape them; using our expert knowledge of ad products, sales channels and the industry to impact the way the world experiences music and podcasts.</p>\n<p data-start=\"167\" data-end=\"647\">Our Advertising Product &amp; Technology team is building the next generation advertising platform for audio and video at Spotify. We create thoughtful, non-interruptive ad experiences that power free listening for hundreds of millions of fans around the world. From display to video, our work lives across some of the most highly trafficked surfaces in the app—helping connect listeners, creators, and advertisers in meaningful ways.</p>\n</div>",
+      "id": "a0fa7da3-4c3c-4fa2-97bd-7d6eb01eb9e5",
+      "lists": [
+        {
+          "text": "What You'll Do:",
+          "content": "\n<li data-start=\"1118\" data-end=\"1210\">Build and evolve ad experiences that allow millions of listeners to enjoy Spotify for free</li>\n<li data-start=\"1213\" data-end=\"1353\">Collaborate with engineers across Android, iOS, backend, and web, along with product, design, and data partners to ship impactful features</li>\n<li data-start=\"1356\" data-end=\"1426\">Write clean, maintainable code that scales across teams and products</li>\n<li data-start=\"1429\" data-end=\"1545\">Contribute to the technical direction, architecture, and best practices for Android development within Advertising</li>\n<li data-start=\"1548\" data-end=\"1626\">Improve app performance, reliability, and user experience across ad surfaces</li>\n<li data-start=\"1629\" data-end=\"1717\">Help shape reusable components and libraries that support fast, consistent development</li>\n<li data-start=\"1720\" data-end=\"1795\">Contribute to a collaborative, inclusive, and autonomous team environment</li>\n"
+        },
+        {
+          "text": "Who You Are:",
+          "content": "\n<li data-start=\"1813\" data-end=\"1912\">You know how to write clear, idiomatic Kotlin or Java and build maintainable Android applications</li>\n<li data-start=\"1915\" data-end=\"1989\">You are experienced with modern Android frameworks and development tools</li>\n<li data-start=\"1992\" data-end=\"2073\">You have a strong understanding of Android architecture patterns and API design</li>\n<li data-start=\"2076\" data-end=\"2160\">You care about code quality, performance, and delivering polished user experiences</li>\n<li data-start=\"2163\" data-end=\"2243\">You understand how mobile applications connect with backend systems end-to-end</li>\n<li data-start=\"2246\" data-end=\"2348\">You have shipped at least one app to the Google Play Store or have a project you can walk us through</li>\n<li data-start=\"2351\" data-end=\"2433\">You value collaboration and contribute to a positive, inclusive team environment</li>\n<li data-start=\"2436\" data-end=\"2499\">You have 2+ years of experience building Android applications</li>\n"
+        },
+        {
+          "text": "Where You'll Be:",
+          "content": "<div>\n\n<li data-start=\"2529\" data-end=\"2677\">We offer you the flexibility to work where you work best! For this role, you can be within the Americas region as long as we have a work location.</li>\n<li data-start=\"2680\" data-end=\"2757\">This team operates within the Eastern Standard time zone for collaboration.</li>\n\n</div>"
+        }
+      ],
+      "text": "Android Engineer - Advertising",
+      "country": "US",
+      "workplaceType": "remote",
+      "opening": "<div>Our mission on the Advertising Product &amp; Technology team is to build a next generation advertising platform that aligns with our unique value proposition for audio and video. We work to scale the user experience for hundreds of millions of fans and hundreds of thousands of advertisers. This scale brings unique challenges as well as tremendous opportunities for our artists and creators.</div>",
+      "openingPlain": "Our mission on the Advertising Product & Technology team is to build a next generation advertising platform that aligns with our unique value proposition for audio and video. We work to scale the user experience for hundreds of millions of fans and hundreds of thousands of advertisers. This scale brings unique challenges as well as tremendous opportunities for our artists and creators.\n",
+      "descriptionBody": "<div>\n<p data-end=\"647\" data-start=\"167\">Sell what you love. For us and millions of users across the globe, that&rsquo;s Spotify. Join the Sales team and you&rsquo;ll build the relationships that help grow our business in existing markets and beyond. We don&rsquo;t just sell creative solutions to our clients and partners, we help to shape them; using our expert knowledge of ad products, sales channels and the industry to impact the way the world experiences music and podcasts.</p>\n<p data-end=\"647\" data-start=\"167\">Our Advertising Product &amp; Technology team is building the next generation advertising platform for audio and video at Spotify. We create thoughtful, non-interruptive ad experiences that power free listening for hundreds of millions of fans around the world. From display to video, our work lives across some of the most highly trafficked surfaces in the app&mdash;helping connect listeners, creators, and advertisers in meaningful ways.</p>\n</div>",
+      "descriptionBodyPlain": "Sell what you love. For us and millions of users across the globe, that’s Spotify. Join the Sales team and you’ll build the relationships that help grow our business in existing markets and beyond. We don’t just sell creative solutions to our clients and partners, we help to shape them; using our expert knowledge of ad products, sales channels and the industry to impact the way the world experiences music and podcasts.\nOur Advertising Product & Technology team is building the next generation advertising platform for audio and video at Spotify. We create thoughtful, non-interruptive ad experiences that power free listening for hundreds of millions of fans around the world. From display to video, our work lives across some of the most highly trafficked surfaces in the app—helping connect listeners, creators, and advertisers in meaningful ways.\n",
+      "hostedUrl": "https://jobs.lever.co/spotify/a0fa7da3-4c3c-4fa2-97bd-7d6eb01eb9e5",
+      "applyUrl": "https://jobs.lever.co/spotify/a0fa7da3-4c3c-4fa2-97bd-7d6eb01eb9e5/apply"
+    }
+  ],
+  "ashby": {
+    "jobs": [
+      {
+        "id": "34413f8d-26bf-4bbc-8ade-eb309a0e2245",
+        "title": " Security Engineer, Cloud",
+        "department": "Engineering",
+        "team": "Backend",
+        "employmentType": "FullTime",
+        "location": "New York, NY (HQ)",
+        "secondaryLocations": [
+          {
+            "location": "Remote (Canada)",
+            "address": {
+              "postalAddress": {
+                "addressCountry": "Canada"
+              }
+            }
+          },
+          {
+            "location": "Remote (US)",
+            "address": {
+              "postalAddress": {
+                "addressCountry": "United States"
+              }
+            }
+          },
+          {
+            "location": "Miami, FL",
+            "address": {
+              "postalAddress": {
+                "addressRegion": "Florida",
+                "addressCountry": "USA",
+                "addressLocality": "Miami"
+              }
+            }
+          }
+        ],
+        "publishedAt": "2026-04-07T17:12:35.753+00:00",
+        "isListed": true,
+        "isRemote": true,
+        "workplaceType": "Hybrid",
+        "address": {
+          "postalAddress": {
+            "addressRegion": "NY",
+            "addressCountry": "USA",
+            "addressLocality": "New York City"
+          }
+        },
+        "jobUrl": "https://jobs.ashbyhq.com/ramp/34413f8d-26bf-4bbc-8ade-eb309a0e2245",
+        "applyUrl": "https://jobs.ashbyhq.com/ramp/34413f8d-26bf-4bbc-8ade-eb309a0e2245/application",
+        "descriptionHtml": "<h1><strong>About Ramp</strong></h1><p style=\"min-height:1.5em\">Ramp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $200B in annualized spend flows in and out of 70,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books.</p><p style=\"min-height:1.5em\">The problems are high-stakes, data-dense, and unforgiving.</p><p style=\"min-height:1.5em\">We hire people with high agency and high urgency. We look for slope over intercept. We care less about where you trained and more about what you’ve built. At Ramp, everyone is a builder who owns problems end to end and makes consequential decisions that shape the outcome.</p><p style=\"min-height:1.5em\">The median Ramp customer saves 5% and grows revenue 16% in their first year – far in excess of businesses operating without Ramp. We believe every ambitious company deserves the same.</p><p style=\"min-height:1.5em\">If you want to build systems that directly shape how companies move and manage billions, Ramp is the place to do it.</p><p style=\"min-height:1.5em\"></p><h1>About the Role</h1><p style=\"min-height:1.5em\">The Security Engineering team helps make Ramp the most secure place for our customers to collect, manage, and put to work their business’ financial information </p><p style=\"min-height:1.5em\">Our work centers in three areas:</p><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Ramp builds p",
+        "descriptionPlain": "ABOUT RAMP\n\nRamp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $200B in annualized spend flows in and out of 70,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books.\n\nThe problems are high-stakes, data-dense, and unforgiving.\n\nWe hire people with high agency and high urgency. We look for slope over intercept. We care less about where you trained and more about what you’ve built. At Ramp, everyone is a builder who owns problems end to end and makes consequential decisions that shape the outcome.\n\nThe median Ramp customer saves 5% and grows revenue 16% in their first year – far in excess of businesses operating without Ramp. We believe every ambitious company deserves the same.\n\nIf you want to build systems that directly shape how companies move and manage billions, Ramp is the place to do it.\n\n\n\n\nABOUT THE ROLE\n\nThe Security Engineering team helps make Ramp the most secure place for our customers to collect, manage, and put to work their business’ financial information \n\nOur work centers in three areas:\n\n - Ramp builds products with an eye for security\n\n - Ramp detects and responds to threats before they cause harm\n\n - Security powers Ramp’s growth\n\nCheck out our Engineering Blog https://engineering.ramp.com/ for more on our tech stack, mission and values!\n\n\n\nWhat You’ll Do\n\n - Drive our cloud security roadmap: review our cloud deployments to"
+      },
+      {
+        "id": "f564dcf9-9390-4a3f-896f-8047a5086040",
+        "title": "Mobile Engineer, Android",
+        "department": "Engineering",
+        "team": "Mobile",
+        "employmentType": "FullTime",
+        "location": "New York, NY (HQ)",
+        "secondaryLocations": [
+          {
+            "location": "Remote (Canada)",
+            "address": {
+              "postalAddress": {
+                "addressCountry": "Canada"
+              }
+            }
+          },
+          {
+            "location": "San Francisco, CA",
+            "address": {
+              "postalAddress": {
+                "addressRegion": "California ",
+                "addressCountry": "USA",
+                "addressLocality": "San Fransisco"
+              }
+            }
+          },
+          {
+            "location": "Remote (US)",
+            "address": {
+              "postalAddress": {
+                "addressCountry": "United States"
+              }
+            }
+          }
+        ],
+        "publishedAt": "2025-07-31T21:58:34.674+00:00",
+        "isListed": true,
+        "isRemote": true,
+        "workplaceType": "Hybrid",
+        "address": {
+          "postalAddress": {
+            "addressRegion": "NY",
+            "addressCountry": "USA",
+            "addressLocality": "New York City"
+          }
+        },
+        "jobUrl": "https://jobs.ashbyhq.com/ramp/f564dcf9-9390-4a3f-896f-8047a5086040",
+        "applyUrl": "https://jobs.ashbyhq.com/ramp/f564dcf9-9390-4a3f-896f-8047a5086040/application",
+        "descriptionHtml": "<h1><strong>About Ramp</strong></h1><p style=\"min-height:1.5em\">Ramp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $200B in annualized spend flows in and out of 70,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books.</p><p style=\"min-height:1.5em\">The problems are high-stakes, data-dense, and unforgiving.</p><p style=\"min-height:1.5em\">We hire people with high agency and high urgency. We look for slope over intercept. We care less about where you trained and more about what you’ve built. At Ramp, everyone is a builder who owns problems end to end and makes consequential decisions that shape the outcome.</p><p style=\"min-height:1.5em\">The median Ramp customer saves 5% and grows revenue 16% in their first year – far in excess of businesses operating without Ramp. We believe every ambitious company deserves the same.</p><p style=\"min-height:1.5em\">If you want to build systems that directly shape how companies move and manage billions, Ramp is the place to do it.</p><p style=\"min-height:1.5em\"></p><h1>About the Role</h1><p style=\"min-height:1.5em\">As an Android Engineer at Ramp, you’ll enhance our successful and rapidly growing mobile app. You will improve the core platform that thousands of businesses rely on while also building the future of automated finance by integrating AI and intelligent agents into the mobile experience. This is a chanc",
+        "descriptionPlain": "ABOUT RAMP\n\nRamp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $200B in annualized spend flows in and out of 70,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books.\n\nThe problems are high-stakes, data-dense, and unforgiving.\n\nWe hire people with high agency and high urgency. We look for slope over intercept. We care less about where you trained and more about what you’ve built. At Ramp, everyone is a builder who owns problems end to end and makes consequential decisions that shape the outcome.\n\nThe median Ramp customer saves 5% and grows revenue 16% in their first year – far in excess of businesses operating without Ramp. We believe every ambitious company deserves the same.\n\nIf you want to build systems that directly shape how companies move and manage billions, Ramp is the place to do it.\n\n\n\n\nABOUT THE ROLE\n\nAs an Android Engineer at Ramp, you’ll enhance our successful and rapidly growing mobile app. You will improve the core platform that thousands of businesses rely on while also building the future of automated finance by integrating AI and intelligent agents into the mobile experience. This is a chance to grow your skills on a proven product and define the next generation of fintech.\n\nCheck out our Engineering Blog https://engineering.ramp.com/ for more on our tech stack, mission and values!\n\n\n\n\nWHAT YOU’LL DO\n\n - Design, build, and l"
+      },
+      {
+        "id": "4e64ab86-4e30-403b-b1b9-41dc052570ce",
+        "title": "Software Engineer, Frontend",
+        "department": "Engineering",
+        "team": "Frontend",
+        "employmentType": "FullTime",
+        "location": "New York, NY (HQ)",
+        "secondaryLocations": [
+          {
+            "location": "Remote (Canada)",
+            "address": {
+              "postalAddress": {
+                "addressCountry": "Canada"
+              }
+            }
+          },
+          {
+            "location": "San Francisco, CA",
+            "address": {
+              "postalAddress": {
+                "addressRegion": "California ",
+                "addressCountry": "USA",
+                "addressLocality": "San Fransisco"
+              }
+            }
+          },
+          {
+            "location": "Remote (US)",
+            "address": {
+              "postalAddress": {
+                "addressCountry": "United States"
+              }
+            }
+          },
+          {
+            "location": "Miami, FL",
+            "address": {
+              "postalAddress": {
+                "addressRegion": "Florida",
+                "addressCountry": "USA",
+                "addressLocality": "Miami"
+              }
+            }
+          }
+        ],
+        "publishedAt": "2023-03-09T17:44:00.817+00:00",
+        "isListed": true,
+        "isRemote": true,
+        "workplaceType": "Hybrid",
+        "address": {
+          "postalAddress": {
+            "addressRegion": "NY",
+            "addressCountry": "USA",
+            "addressLocality": "New York City"
+          }
+        },
+        "jobUrl": "https://jobs.ashbyhq.com/ramp/4e64ab86-4e30-403b-b1b9-41dc052570ce",
+        "applyUrl": "https://jobs.ashbyhq.com/ramp/4e64ab86-4e30-403b-b1b9-41dc052570ce/application",
+        "descriptionHtml": "<h1><strong>About Ramp</strong></h1><p style=\"min-height:1.5em\">Ramp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $200B in annualized spend flows in and out of 70,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books.</p><p style=\"min-height:1.5em\">The problems are high-stakes, data-dense, and unforgiving.</p><p style=\"min-height:1.5em\">We hire people with high agency and high urgency. We look for slope over intercept. We care less about where you trained and more about what you’ve built. At Ramp, everyone is a builder who owns problems end to end and makes consequential decisions that shape the outcome.</p><p style=\"min-height:1.5em\">The median Ramp customer saves 5% and grows revenue 16% in their first year – far in excess of businesses operating without Ramp. We believe every ambitious company deserves the same.</p><p style=\"min-height:1.5em\">If you want to build systems that directly shape how companies move and manage billions, Ramp is the place to do it.</p><p style=\"min-height:1.5em\"></p><h1>About the Role</h1><p style=\"min-height:1.5em\">Our ideal candidate has a deep understanding of JavaScript, a passion for web performance, and can creatively come up with solutions to solve customer's needs. Our tech stack currently involves TypeScript, React, Vite, and Ryu, our in-house design system.</p><p style=\"min-height:1.5em\">Check out our<a",
+        "descriptionPlain": "ABOUT RAMP\n\nRamp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $200B in annualized spend flows in and out of 70,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books.\n\nThe problems are high-stakes, data-dense, and unforgiving.\n\nWe hire people with high agency and high urgency. We look for slope over intercept. We care less about where you trained and more about what you’ve built. At Ramp, everyone is a builder who owns problems end to end and makes consequential decisions that shape the outcome.\n\nThe median Ramp customer saves 5% and grows revenue 16% in their first year – far in excess of businesses operating without Ramp. We believe every ambitious company deserves the same.\n\nIf you want to build systems that directly shape how companies move and manage billions, Ramp is the place to do it.\n\n\n\n\nABOUT THE ROLE\n\nOur ideal candidate has a deep understanding of JavaScript, a passion for web performance, and can creatively come up with solutions to solve customer's needs. Our tech stack currently involves TypeScript, React, Vite, and Ryu, our in-house design system.\n\nCheck out our Engineering Blog https://engineering.ramp.com/ for more on our tech stack, mission and values!\n\n\n\n\nWHAT YOU’LL DO\n\n - Build! \n\n - Design performant, beautiful, and usable interfaces \n\n - Collaborate on our technical vision. Lead discussions and implementation of multip"
+      },
+      {
+        "id": "1db75064-e38c-4b21-8310-21471943d0be",
+        "title": "Technical Program Manager",
+        "department": "Engineering",
+        "team": "Infrastructure ",
+        "employmentType": "FullTime",
+        "location": "New York, NY (HQ)",
+        "secondaryLocations": [],
+        "publishedAt": "2026-05-22T16:15:13.252+00:00",
+        "isListed": true,
+        "isRemote": true,
+        "workplaceType": "Hybrid",
+        "address": {
+          "postalAddress": {
+            "addressRegion": "NY",
+            "addressCountry": "USA",
+            "addressLocality": "New York City"
+          }
+        },
+        "jobUrl": "https://jobs.ashbyhq.com/ramp/1db75064-e38c-4b21-8310-21471943d0be",
+        "applyUrl": "https://jobs.ashbyhq.com/ramp/1db75064-e38c-4b21-8310-21471943d0be/application",
+        "descriptionHtml": "<h1><strong>About Ramp</strong></h1><p style=\"min-height:1.5em\">Ramp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $200B in annualized spend flows in and out of 70,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books.</p><p style=\"min-height:1.5em\">The problems are high-stakes, data-dense, and unforgiving.</p><p style=\"min-height:1.5em\">We hire people with high agency and high urgency. We look for slope over intercept. We care less about where you trained and more about what you’ve built. At Ramp, everyone is a builder who owns problems end to end and makes consequential decisions that shape the outcome.</p><p style=\"min-height:1.5em\">The median Ramp customer saves 5% and grows revenue 16% in their first year – far in excess of businesses operating without Ramp. We believe every ambitious company deserves the same.</p><p style=\"min-height:1.5em\">If you want to build systems that directly shape how companies move and manage billions, Ramp is the place to do it.</p><p style=\"min-height:1.5em\"></p><h1><strong>About the Role</strong></h1><p style=\"min-height:1.5em\">We're looking for a Technical Program Manager who can operate at the intersection of engineering, product, and business — someone deeply technical, trusted instinctively by engineers, and sharp enough to drive clarity and momentum across complex, cross-functional programs. This is a h",
+        "descriptionPlain": "ABOUT RAMP\n\nRamp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $200B in annualized spend flows in and out of 70,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books.\n\nThe problems are high-stakes, data-dense, and unforgiving.\n\nWe hire people with high agency and high urgency. We look for slope over intercept. We care less about where you trained and more about what you’ve built. At Ramp, everyone is a builder who owns problems end to end and makes consequential decisions that shape the outcome.\n\nThe median Ramp customer saves 5% and grows revenue 16% in their first year – far in excess of businesses operating without Ramp. We believe every ambitious company deserves the same.\n\nIf you want to build systems that directly shape how companies move and manage billions, Ramp is the place to do it.\n\n\n\n\nABOUT THE ROLE\n\nWe're looking for a Technical Program Manager who can operate at the intersection of engineering, product, and business — someone deeply technical, trusted instinctively by engineers, and sharp enough to drive clarity and momentum across complex, cross-functional programs. This is a high-agency role with real executive visibility and direct impact on how Ramp's engineering organization scales.\n\nWe're looking for someone who is energized by complexity, deeply curious about what AI can unlock for engineering teams, and eager to apply it"
+      }
+    ],
+    "apiVersion": "1"
+  }
+}

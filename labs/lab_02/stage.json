@@ -1,25 +1,32 @@
 {
   "id": "lab_02",
   "title": "Structured Output & State",
-  "phase": "Phase 2 · Prompt and State",
+  "phase": "Phase 2 · Prompt Engineering",
   "available": true,
   "adapter": "labs.lab_02.web_adapter:Lab02Adapter",
+  "installation_markers": ["src/run_structured.py"],
   "previous_stage": "lab_01",
-  "capabilities": ["model_call", "validation", "state_update"],
-  "now_you_can": ["Produce a validated fit/gap report.", "Preserve profile and JD task state.", "Reject malformed model output."],
+  "capabilities": ["model_call", "prompt_contract", "validation", "state_update"],
+  "now_you_can": ["Run a task-specific Fit/Gap Agent with a fixed output contract.", "Keep stable output rules separate from the current user request and dynamic profile/JD context.", "Produce a validated fit/gap report for every one-shot request.", "Preserve profile, JD, report, validation, and task status.", "Reject malformed model output before state persistence."],
   "examples": [
     {
       "id": "lab_02_fit_gap",
-      "prompt": "Based on my profile and this JD, explain my strengths, gaps, missing information, and recommended next steps.",
+      "prompt": "Based on my profile and this JD, explain my strengths, gaps, risks, missing information, and recommended next steps.",
       "observe": ["Validated FitGapReport fields", "Schema validation event", "State transition to report_generated"],
       "compare_note": "Run the same case in Lab 1: the prose may be useful, but code cannot rely on required fields or types."
     },
     {
       "id": "lab_02_missing_info",
-      "prompt": "What required information is missing before I tailor my application, and what state should we preserve?",
-      "observe": ["missing_info array", "recommended_next_steps array", "Portable report artifact"],
+      "prompt": "What required information and risks should I check before I tailor my application, and what state should we preserve?",
+      "observe": ["missing_info array", "risks array", "recommended_next_steps array", "Portable report artifact"],
       "compare_note": "Lab 1 can mention missing facts, but cannot guarantee a machine-readable missing_info field."
+    },
+    {
+      "id": "lab_02_hello",
+      "prompt": "Hello, how are you?",
+      "observe": ["Current request visible in Prompt & model I/O", "The same required FitGapReport fields", "A validated report instead of a general chat reply"],
+      "compare_note": "Lab 1 answers conversationally; Lab 2 still returns the fixed FitGapReport shape, making the task-specific Agent boundary obvious."
     }
   ],
-  "still_cannot": "Each turn regenerates the canonical fit/gap report; this Lab does not answer arbitrary follow-up questions. The agent only knows the resume/JD you supplied and cannot fetch a webpage or control external actions."
+  "still_cannot": "Lab 2 is a task-specific Fit/Gap Agent rather than a general chatbot: every request is interpreted through the fixed FitGapReport contract. Each run reads only the current user request and regenerates the validated report; task state is saved, but multi-turn conversation memory is not. The agent only knows the resume/JD you supplied and cannot fetch a webpage or control external actions."
 }

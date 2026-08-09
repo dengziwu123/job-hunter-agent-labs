@@ -688,6 +688,7 @@ def semantic_key(event: HarnessEvent) -> str:
         "draft_action": "policy.classify_action",
         "classify_action": "policy.classify_action",
         "load_skill": "skill.load_job_prep",
+        "select_context": "context.select_budgeted",
         "generate_claims": "model.generate_claims",
         "build_evidence_notes": "evidence.verify_claims",
         "ping": "capability.mcp_boundary",
@@ -784,18 +785,40 @@ def build_delta(before: RunTrace, after: RunTrace) -> dict[str, Any]:
         if not previous:
             continue
         if previous.participant_id != span.participant_id:
-            ownership.append({"semantic_key": span.semantic_key, "before": previous.participant_id, "after": span.participant_id})
+            ownership.append(
+                {
+                    "semantic_key": span.semantic_key,
+                    "occurrence": key[1],
+                    "before": previous.participant_id,
+                    "after": span.participant_id,
+                }
+            )
         if previous.input_contract != span.input_contract:
             input_contract_changes.append(
-                {"semantic_key": span.semantic_key, "before": previous.input_contract, "after": span.input_contract}
+                {
+                    "semantic_key": span.semantic_key,
+                    "occurrence": key[1],
+                    "before": previous.input_contract,
+                    "after": span.input_contract,
+                }
             )
         if previous.output_contract != span.output_contract:
             output_contract_changes.append(
-                {"semantic_key": span.semantic_key, "before": previous.output_contract, "after": span.output_contract}
+                {
+                    "semantic_key": span.semantic_key,
+                    "occurrence": key[1],
+                    "before": previous.output_contract,
+                    "after": span.output_contract,
+                }
             )
         if previous.context_sources != span.context_sources:
             context_changes.append(
-                {"semantic_key": span.semantic_key, "before": previous.context_sources, "after": span.context_sources}
+                {
+                    "semantic_key": span.semantic_key,
+                    "occurrence": key[1],
+                    "before": previous.context_sources,
+                    "after": span.context_sources,
+                }
             )
         if (
             previous.kind != span.kind
@@ -807,6 +830,7 @@ def build_delta(before: RunTrace, after: RunTrace) -> dict[str, Any]:
             changed.append(
                 {
                     "semantic_key": span.semantic_key,
+                    "occurrence": key[1],
                     "before": previous.model_dump(),
                     "after": span.model_dump(),
                 }

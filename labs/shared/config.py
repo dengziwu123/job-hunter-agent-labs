@@ -12,7 +12,7 @@ from typing import Iterator, Literal
 ROOT_DIR = Path(__file__).resolve().parents[2]
 Provider = Literal["gemini", "openai", "anthropic"]
 DEFAULT_MODELS: dict[Provider, str] = {
-    "gemini": "gemini-flash-latest",
+    "gemini": "gemini-3.1-flash-lite",
     "openai": "gpt-5-mini",
     "anthropic": "claude-haiku-4-5",
 }
@@ -206,4 +206,6 @@ def _save_env_values(values: dict[str, str]) -> None:
     updated.extend(f"{key}={value}" for key, value in remaining.items())
 
     env_path.write_text("\n".join(updated) + "\n", encoding="utf-8")
-    env_path.chmod(0o600)
+    # Windows relies on the user profile's inherited ACLs; POSIX mode bits do not map to NTFS ACLs.
+    if os.name != "nt":
+        env_path.chmod(0o600)

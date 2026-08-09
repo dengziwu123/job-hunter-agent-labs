@@ -20,6 +20,12 @@ class ProviderToolCall:
     continuation: dict[str, Any]
 
 
+@dataclass(frozen=True)
+class ProviderToolDecision:
+    call: ProviderToolCall | None
+    raw_response: dict[str, Any]
+
+
 def complete_messages(settings: Settings, messages: list[dict[str, str]]) -> str:
     """Course-provided OpenAI/Anthropic message call.
 
@@ -71,6 +77,37 @@ def complete_structured(
 ) -> Any:
     """Return schema-shaped data from OpenAI or Anthropic via forced tool use."""
     _require_non_gemini_key(settings)
+    request = provider_structured_request(settings, prompt, response_schema)
+
+    if settings.provider == "openai":
+        payload = _post_openai(settings, request)
+        arguments = payload["choices"][0]["message"]["tool_calls"][0]["function"]["arguments"]
+        return json.loads(arguments)["result"]
+
+    if settings.provider == "anthropic":
+        payload = _post_anthropic(settings, request)
+        tool_use = next(block for block in payload["content"] if block["type"] == "tool_use")
+        return tool_use["input"]["result"]
+
+    raise ValueError("Gemini structured calls belong to LlmSession.")
+
+
+def provider_structured_request(
+    settings: Settings,
+    prompt: str,
+    response_schema: dict[str, Any],
+) -> dict[str, Any]:
+    """Build the exact provider request body used for a structured call."""
+    if settings.provider == "gemini":
+        return {
+            "model": settings.model,
+            "contents": prompt,
+            "config": {
+                "response_mime_type": "application/json",
+                "response_schema": response_schema,
+            },
+        }
+
     wrapped_schema = {
         "type": "object",
         "properties": {"result": _standard_json_schema(response_schema)},
@@ -81,49 +118,39 @@ def complete_structured(
     description = "Return the requested structured response."
 
     if settings.provider == "openai":
-        payload = _post_openai(
-            settings,
-            {
-                "model": settings.model,
-                "messages": [{"role": "user", "content": prompt}],
-                "tools": [
-                    {
-                        "type": "function",
-                        "function": {
-                            "name": tool_name,
-                            "description": description,
-                            "parameters": wrapped_schema,
-                            "strict": True,
-                        },
-                    },
-                ],
-                "tool_choice": {"type": "function", "function": {"name": tool_name}},
-            },
-        )
-        arguments = payload["choices"][0]["message"]["tool_calls"][0]["function"]["arguments"]
-        return json.loads(arguments)["result"]
-
-    if settings.provider == "anthropic":
-        payload = _post_anthropic(
-            settings,
-            {
-                "model": settings.model,
-                "max_tokens": 2048,
-                "messages": [{"role": "user", "content": prompt}],
-                "tools": [
-                    {
+        return {
+            "model": settings.model,
+            "messages": [{"role": "user", "content": prompt}],
+            "tools": [
+                {
+                    "type": "function",
+                    "function": {
                         "name": tool_name,
                         "description": description,
-                        "input_schema": wrapped_schema,
-                    }
-                ],
-                "tool_choice": {"type": "tool", "name": tool_name},
-            },
-        )
-        tool_use = next(block for block in payload["content"] if block["type"] == "tool_use")
-        return tool_use["input"]["result"]
+                        "parameters": wrapped_schema,
+                        "strict": True,
+                    },
+                }
+            ],
+            "tool_choice": {"type": "function", "function": {"name": tool_name}},
+        }
 
-    raise ValueError("Gemini structured calls belong to LlmSession.")
+    if settings.provider == "anthropic":
+        return {
+            "model": settings.model,
+            "max_tokens": 2048,
+            "messages": [{"role": "user", "content": prompt}],
+            "tools": [
+                {
+                    "name": tool_name,
+                    "description": description,
+                    "input_schema": wrapped_schema,
+                }
+            ],
+            "tool_choice": {"type": "tool", "name": tool_name},
+        }
+
+    raise ValueError(f"Unsupported LLM provider: {settings.provider}")
 
 
 def request_tool_call(
@@ -132,69 +159,97 @@ def request_tool_call(
     declaration: dict[str, Any],
 ) -> ProviderToolCall | None:
     """Ask OpenAI or Anthropic to choose a call for one declared tool."""
-    _require_non_gemini_key(settings)
-    parameters = _standard_json_schema(declaration["parameters"])
+    return request_tool_decision(settings, prompt, declaration).call
 
+
+def provider_tool_request(
+    settings: Settings,
+    prompt: str,
+    declaration: dict[str, Any],
+) -> dict[str, Any]:
+    """Build the exact provider request body used to select one tool."""
+    if settings.provider == "gemini":
+        return {
+            "model": settings.model,
+            "contents": prompt,
+            "config": {"tools": [{"function_declarations": [declaration]}]},
+        }
+
+    parameters = _standard_json_schema(declaration["parameters"])
+    messages = [{"role": "user", "content": prompt}]
     if settings.provider == "openai":
-        messages = [{"role": "user", "content": prompt}]
-        tools = [
-            {
-                "type": "function",
-                "function": {
+        return {
+            "model": settings.model,
+            "messages": messages,
+            "tools": [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": declaration["name"],
+                        "description": declaration["description"],
+                        "parameters": parameters,
+                    },
+                }
+            ],
+            "tool_choice": "auto",
+            "parallel_tool_calls": False,
+        }
+    if settings.provider == "anthropic":
+        return {
+            "model": settings.model,
+            "max_tokens": 1024,
+            "messages": messages,
+            "tools": [
+                {
                     "name": declaration["name"],
                     "description": declaration["description"],
-                    "parameters": parameters,
-                },
-            }
-        ]
-        payload = _post_openai(
-            settings,
-            {
-                "model": settings.model,
-                "messages": messages,
-                "tools": tools,
-                "tool_choice": "auto",
-                "parallel_tool_calls": False,
-            },
-        )
+                    "input_schema": parameters,
+                }
+            ],
+        }
+    raise ValueError(f"Unsupported LLM provider: {settings.provider}")
+
+
+def request_tool_decision(
+    settings: Settings,
+    prompt: str,
+    declaration: dict[str, Any],
+) -> ProviderToolDecision:
+    """Return both the extracted call and the provider's untouched response."""
+    _require_non_gemini_key(settings)
+    request = provider_tool_request(settings, prompt, declaration)
+
+    if settings.provider == "openai":
+        payload = _post_openai(settings, request)
         message = payload["choices"][0]["message"]
         tool_calls = message.get("tool_calls") or []
         if not tool_calls:
-            return None
+            return ProviderToolDecision(call=None, raw_response=payload)
         tool_call = next(
             (item for item in tool_calls if item["function"]["name"] == declaration["name"]),
             None,
         )
         if tool_call is None:
-            return None
-        return ProviderToolCall(
-            name=declaration["name"],
-            arguments=json.loads(tool_call["function"]["arguments"]),
-            continuation={
-                "messages": [*messages, message],
-                "tool_call_id": tool_call["id"],
-                "tools": tools,
-            },
+            return ProviderToolDecision(call=None, raw_response=payload)
+        try:
+            arguments = json.loads(tool_call["function"]["arguments"])
+        except (json.JSONDecodeError, TypeError):
+            return ProviderToolDecision(call=None, raw_response=payload)
+        return ProviderToolDecision(
+            call=ProviderToolCall(
+                name=declaration["name"],
+                arguments=arguments,
+                continuation={
+                    "messages": [*request["messages"], message],
+                    "tool_call_id": tool_call["id"],
+                    "tools": request["tools"],
+                },
+            ),
+            raw_response=payload,
         )
 
     if settings.provider == "anthropic":
-        messages = [{"role": "user", "content": prompt}]
-        tools = [
-            {
-                "name": declaration["name"],
-                "description": declaration["description"],
-                "input_schema": parameters,
-            }
-        ]
-        payload = _post_anthropic(
-            settings,
-            {
-                "model": settings.model,
-                "max_tokens": 1024,
-                "messages": messages,
-                "tools": tools,
-            },
-        )
+        payload = _post_anthropic(settings, request)
         tool_use = next(
             (
                 block
@@ -204,15 +259,21 @@ def request_tool_call(
             None,
         )
         if tool_use is None:
-            return None
-        return ProviderToolCall(
-            name=declaration["name"],
-            arguments=tool_use["input"],
-            continuation={
-                "messages": [*messages, {"role": "assistant", "content": payload["content"]}],
-                "tool_use_id": tool_use["id"],
-                "tools": tools,
-            },
+            return ProviderToolDecision(call=None, raw_response=payload)
+        return ProviderToolDecision(
+            call=ProviderToolCall(
+                name=declaration["name"],
+                arguments=tool_use["input"],
+                continuation={
+                    "messages": [
+                        *request["messages"],
+                        {"role": "assistant", "content": payload["content"]},
+                    ],
+                    "tool_use_id": tool_use["id"],
+                    "tools": request["tools"],
+                },
+            ),
+            raw_response=payload,
         )
 
     raise ValueError("Gemini tool calls belong to ToolUseModel.")

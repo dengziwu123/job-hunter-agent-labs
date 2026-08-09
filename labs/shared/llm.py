@@ -4,7 +4,11 @@ import json
 from typing import Any
 
 from labs.shared.config import Settings, load_settings
-from labs.shared.providers import complete_messages, complete_structured
+from labs.shared.providers import (
+    complete_messages,
+    complete_structured,
+    provider_structured_request,
+)
 
 
 class LlmSession:
@@ -66,13 +70,11 @@ class LlmSession:
 
     def _complete_live_json(self, prompt: str, response_schema: dict[str, Any]) -> str:
         client, types = self._client_and_types()
+        request = provider_structured_request(self.settings, prompt, response_schema)
         response = client.models.generate_content(
-            model=self.settings.model,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-                response_schema=response_schema,
-            ),
+            model=request["model"],
+            contents=request["contents"],
+            config=types.GenerateContentConfig(**request["config"]),
         )
         return response.text or ""
 

@@ -49,7 +49,7 @@ def list_artifacts(lab_id: str, root: Path | None = None) -> list[str]:
     lab_dir = root / "artifacts" / lab_id
     if not lab_dir.exists():
         return []
-    return sorted(str(path.relative_to(root)) for path in lab_dir.rglob("*") if path.is_file())
+    return sorted(path.relative_to(root).as_posix() for path in lab_dir.rglob("*") if path.is_file())
 
 
 def run_lab_tests(lab_id: str, root: Path | None = None) -> subprocess.CompletedProcess[str]:
@@ -62,4 +62,3 @@ def run_lab_tests(lab_id: str, root: Path | None = None) -> subprocess.Completed
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     )
-
