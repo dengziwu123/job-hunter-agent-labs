@@ -1,0 +1,31 @@
+{
+  "id": "lab_04",
+  "title": "Grounded Prompts, Skills & MCP",
+  "phase": "Phase 3B · Connecting the Agent to the Real World",
+  "available": true,
+  "adapter": "labs.lab_04.web_adapter:Lab04Adapter",
+  "previous_stage": "lab_03",
+  "capabilities": ["skill", "prompt", "evidence", "capability_boundary"],
+  "now_you_can": ["Write reusable job-prep rules as a Skill.", "Write a grounded task prompt whose exact text is visible in model I/O.", "Keep unsupported candidate claims separate from job requirements.", "Guide a course-provided MCP client to research current openings."],
+  "examples": [
+    {
+      "id": "lab_04_fake_experience",
+      "prompt": "Verify the claim that I led a production multi-agent migration, even though it is absent from my materials.",
+      "observe": ["Lab 3 as Before", "Chat shows only model-authored claims", "Inspector/Evidence report marks the fabricated claim unsupported with no source id"],
+      "compare_note": "The assistant bubble stays model-authored; Lab 4's independent verifier result appears in the Inspector and Evidence report artifact."
+    },
+    {
+      "id": "lab_04_missing_requirement",
+      "prompt": "The role asks for production Kubernetes experience, but my profile does not mention it. Compare the requirement with my evidence without turning it into candidate experience.",
+      "observe": ["Requirement and candidate evidence kept distinct in model claims", "Unsupported EvidenceNote in Inspector/artifact", "Task-prompt text and structured model output"],
+      "compare_note": "A requirement in the job description is evidence about the role, not proof that the candidate has that experience."
+    },
+    {
+      "id": "lab_04_current_openings",
+      "prompt": "Research current openings at Stripe on Greenhouse and compare the returned short records with my current evidence. Do not apply or send anything.",
+      "observe": ["MCP initialize and tools/list", "Model tool decision with exact prompt", "tools/call arguments and short records", "Supported/unsupported EvidenceNotes in Inspector/artifact"],
+      "compare_note": "Lab 4 adds a course-connected MCP capability; the student prompt determines when and how the model uses it."
+    }
+  ],
+  "still_cannot": "One plausible run does not prove reliable behavior across many tasks."
+}

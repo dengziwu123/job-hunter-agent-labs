@@ -272,6 +272,10 @@ def build_tool_action_capability(
         "job_description": structured["job_description"],
         "structured_report": structured["report"],
         "task_state": task_state,
+        # Lab 3 owns the bounded conversation context. Publishing it here lets a
+        # later Lab put the same string in front of its own model instead of
+        # recomputing it from a task state this call has already advanced.
+        "request_context": request_context,
         "tool_request": tool_request,
         "tool_call_source": model.tool_call_source,
         "sources": [source.model_dump() for source in sources],

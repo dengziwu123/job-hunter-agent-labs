@@ -21,6 +21,12 @@ def load_registry() -> dict[str, StageRegistration]:
     for manifest_path in sorted(LABS_DIR.glob("lab_*/stage.json")):
         raw_stage = json.loads(manifest_path.read_text(encoding="utf-8"))
         adapter = raw_stage.pop("adapter")
+        installation_markers = raw_stage.pop("installation_markers", [])
+        if any(
+            not (manifest_path.parent / marker).exists()
+            for marker in installation_markers
+        ):
+            continue
         public = StagePublic.model_validate(raw_stage)
         if public.id != manifest_path.parent.name:
             raise ValueError(f"Stage manifest id must match its Lab directory: {manifest_path}")

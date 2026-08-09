@@ -5,7 +5,7 @@ const RELOAD_DELAY_MS = 500;
 const DEBUG_LOG_LIMIT = 100;
 const WEB_SOURCES_PER_PAGE = window.matchMedia("(max-height: 800px)").matches ? 1 : 2;
 const DEFAULT_PROVIDER_MODELS = {
-  gemini: "gemini-flash-latest",
+  gemini: "gemini-3.1-flash-lite",
   openai: "gpt-5-mini",
   anthropic: "claude-haiku-4-5",
 };
@@ -191,6 +191,10 @@ function bindEvents() {
   elements.closeDiff.addEventListener("click", closeDiffWorkspace);
   elements.rerunDiff.addEventListener("click", () => runComparison(true));
   elements.resetDiff.addEventListener("click", resetDiffWorkspace);
+  elements.diffDialogGrid.addEventListener("toggle", (event) => {
+    if (event.target.closest?.(".run-evidence-step")) scheduleEvidenceAlignment();
+  }, true);
+  window.addEventListener("resize", scheduleEvidenceAlignment);
   elements.messageInput.addEventListener("input", renderDiffButtonState);
   elements.closeInstructions.addEventListener("click", closeInstructionsDialog);
   elements.closeInstructionsFooter.addEventListener("click", closeInstructionsDialog);
@@ -254,7 +258,7 @@ function renderInstructionsCompatibilityFallback() {
     <div class="instructions-compatibility">
       <p class="instructions-compatibility-kicker">Runtime update needed</p>
       <h3>This workspace is using an older Lab server</h3>
-      <p>The browser overlay is installed, but this Python runtime does not expose the instructions API yet.</p>
+      <p>The browser patch is installed, but this Python runtime does not expose the instructions API yet.</p>
       <p>Install the latest shared runtime from the Lab 1 package, then restart the web service. Your browser binary, local configuration, and workspace data will stay in place.</p>
     </div>
   `;
@@ -556,6 +560,7 @@ function renderDiff() {
     ? renderPendingComparisonTurn(state.comparison.prompt, history.length)
     : "";
   elements.diffDialogGrid.innerHTML = renderedTurns + pendingTurn;
+  alignComparisonEvidenceRows();
   bindTraceSpanButtons();
   renderSpanInspector();
 }
@@ -628,17 +633,24 @@ function renderPendingComparisonTurn(prompt, index) {
 
 function renderComparisonPair(turn) {
   const result = turn.result;
-  const sharedTotal = sharedTraceDuration(result.before, result.after);
-  const hasRecordedTiming = traceHasRecordedTiming(result.before, result.after);
+  const traceScale = ComparisonState.comparisonTraceScale({
+    before: result.before,
+    after: result.after,
+  });
+  const evidenceRows = ComparisonState.comparisonEvidenceRows({
+    before: result.before,
+    after: result.after,
+    delta: result.delta,
+  });
   return `
-    <div class="diff-turn-grid">
-      ${renderDiffDialogPanel("before", result.before, result.delta, sharedTotal, hasRecordedTiming, result.comparison_id)}
-      ${renderDiffDialogPanel("after", result.after, result.delta, sharedTotal, hasRecordedTiming, result.comparison_id)}
+    <div class="diff-turn-grid" data-align-trajectories="true">
+      ${renderDiffDialogPanel("before", result.before, result.delta, traceScale, result.comparison_id, evidenceRows)}
+      ${renderDiffDialogPanel("after", result.after, result.delta, traceScale, result.comparison_id, evidenceRows)}
     </div>
   `;
 }
 
-function renderDiffDialogPanel(side, run, delta, sharedTotal, hasRecordedTiming, comparisonId) {
+function renderDiffDialogPanel(side, run, delta, traceScale, comparisonId, evidenceRows) {
   const stage = state.stages.find((item) => item.id === run.stage);
   const title = stage ? `${displayStageLabel(run.stage)} · ${stage.title}` : displayStageLabel(run.stage);
   const body = run.status === "ok"
@@ -671,37 +683,228 @@ function renderDiffDialogPanel(side, run, delta, sharedTotal, hasRecordedTiming,
         </div>
         ${artifacts}
       </section>
-      ${renderRunModelIo(run)}
+      ${renderRunEvidence(side, run, delta, evidenceRows)}
       <section class="diff-dialog-section">
         <div class="diff-dialog-section-heading">
           <div class="diff-dialog-section-label">TRAJECTORY</div>
-          <span class="fine-print">${hasRecordedTiming ? "Shared time scale" : "Shared sequence order"}</span>
+          <span class="fine-print">${traceScale.mode === "time" ? "Shared time scale" : "Shared sequence order"}</span>
         </div>
-        ${renderTracePanel(side, run, delta, false, sharedTotal, hasRecordedTiming, comparisonId)}
+        ${renderTracePanel(side, run, delta, false, traceScale, comparisonId)}
       </section>
     </article>
   `;
 }
 
-function renderRunModelIo(run) {
-  const event = (run.events || []).find((item) => hasModelIo(item.details));
-  if (!event) return "";
+function renderRunEvidence(side, run, delta, evidenceRows = []) {
+  const rows = evidenceRows.length
+    ? evidenceRows
+    : ComparisonState.comparisonEvidenceRows({
+        [side]: { events: run.events, trace: run.trace },
+        delta,
+      });
+  const steps = rows.map((row) => row[side]).filter(Boolean);
+  if (!rows.length) {
+    return `
+      <section class="diff-dialog-section diff-run-evidence" data-side="${side}" data-empty="true">
+        <div class="diff-dialog-section-label">${side === "after" ? "WHY OUTPUT CHANGED" : "BASELINE PIPELINE"}</div>
+        <p class="run-evidence-summary">No pipeline events were recorded for this run.</p>
+      </section>
+    `;
+  }
+  const addedCount = steps.filter((step) => step.change === "added").length;
+  const changedCount = steps.filter((step) => step.change === "changed").length;
+  const removedCount = steps.filter((step) => step.change === "removed").length;
+  const summary = side === "after"
+    ? addedCount
+      ? `${addedCount} new pipeline ${addedCount === 1 ? "step explains" : "steps explain"} what this Lab added. Open a step to inspect its exact input and output.`
+      : changedCount
+        ? `${changedCount} inherited ${changedCount === 1 ? "step changed" : "steps changed"} in this Lab. Open the changed step to compare its evidence.`
+        : "The pipeline shape is unchanged. Open model steps to compare their exact inputs and outputs."
+    : removedCount
+      ? `${removedCount} baseline ${removedCount === 1 ? "step is" : "steps are"} removed from the After run.`
+      : "Baseline pipeline. Steps without a change badge are inherited by the After run.";
   return `
-    <section class="diff-dialog-section diff-model-io">
-      <div class="diff-dialog-section-label">PROMPT &amp; MODEL I/O</div>
-      <details class="model-io-details">
-        <summary>View the system prompt, request, provider input, and model output</summary>
-        ${renderModelIoFields(event.details)}
-      </details>
+    <section class="diff-dialog-section diff-run-evidence" data-side="${side}">
+      <div class="diff-dialog-section-label">${side === "after" ? "WHY OUTPUT CHANGED" : "BASELINE PIPELINE"}</div>
+      <p class="run-evidence-summary">${escapeHtml(summary)}</p>
+      <div class="run-evidence-steps">
+        ${rows.map((row, index) => renderRunEvidenceRow(row, index, side)).join("")}
+      </div>
     </section>
   `;
 }
 
-function renderTracePanel(side, run, delta, includeHeading = true, sharedTotal = null, hasRecordedTiming = true, comparisonId = run.run_id) {
+function renderRunEvidenceRow(row, index, side) {
+  const step = row[side];
+  if (step) {
+    return `<div class="run-evidence-row" data-evidence-row="${index}">${renderRunEvidenceStep(step, side)}</div>`;
+  }
+  const counterpart = row[side === "before" ? "after" : "before"];
+  const absentFrom = side === "before" ? "Baseline" : "After";
+  return `
+    <div class="run-evidence-row" data-evidence-row="${index}">
+      <div class="run-evidence-placeholder">
+        <span>NOT IN ${absentFrom.toUpperCase()}</span>
+        <strong>${escapeHtml(counterpart ? humanizeOperation(counterpart.operation) : "No corresponding step")}</strong>
+      </div>
+    </div>
+  `;
+}
+
+function renderRunEvidenceStep(step, side) {
+  const changeLabel = {
+    added: "NEW IN AFTER",
+    removed: "REMOVED FROM AFTER",
+    changed: "CHANGED",
+  }[step.change];
+  const duration = Number.isFinite(step.duration_ms) ? ` · ${formatDuration(step.duration_ms)}` : "";
+  return `
+    <article class="run-evidence-step" data-kind="${escapeHtml(step.type)}" data-change="${escapeHtml(step.change)}">
+      <header class="run-evidence-step-header">
+        <div class="run-evidence-step-number">${step.sequence}</div>
+        <div class="run-evidence-step-copy">
+          <div class="run-evidence-step-title">
+            <span>${escapeHtml(evidenceKindLabel(step.type))}</span>
+            <strong>${escapeHtml(humanizeOperation(step.operation))}</strong>
+          </div>
+          <p>${escapeHtml(step.summary || "Recorded pipeline event.")}</p>
+        </div>
+        ${changeLabel ? `<span class="run-evidence-change" data-change="${step.change}">${changeLabel}</span>` : ""}
+      </header>
+      <div class="run-evidence-meta">${escapeHtml(step.component)}${duration}</div>
+      ${renderEvidenceChangeSummary(step)}
+      ${renderRunEvidencePreview(step.details)}
+      ${renderEventDetails(step.details, false, {
+        changedFields: step.changed_fields,
+        fieldComparisons: step.io_field_comparisons,
+        side,
+      })}
+    </article>
+  `;
+}
+
+function renderEvidenceChangeSummary(step) {
+  if (step.change !== "changed") return "";
+  const labels = (step.changed_fields || []).map(evidenceFieldLabel);
+  const message = labels.length
+    ? `Input changed: ${labels.join(", ")}`
+    : "Execution contract changed";
+  return `<div class="run-evidence-change-summary">${escapeHtml(message)}</div>`;
+}
+
+function evidenceFieldLabel(key) {
+  const labels = {
+    system_prompt: "System prompt",
+    user_request: "User request",
+    request: "Request",
+    messages: "Messages",
+    input: "Tool input",
+    tool_args: "Tool arguments",
+    provider_input: "Provider input",
+    actual_provider_input: "Provider input",
+    reconstructed_provider_input: "Provider input",
+    provider_input_mode: "Provider input format",
+  };
+  return labels[key] || humanizeOperation(key);
+}
+
+let evidenceAlignmentFrame;
+function scheduleEvidenceAlignment() {
+  window.cancelAnimationFrame(evidenceAlignmentFrame);
+  evidenceAlignmentFrame = window.requestAnimationFrame(alignComparisonEvidenceRows);
+}
+
+function alignComparisonEvidenceRows() {
+  const stacked = window.matchMedia("(max-width: 820px)").matches;
+  elements.diffDialogGrid.querySelectorAll(".diff-turn-grid[data-align-trajectories='true']").forEach((grid) => {
+    const rows = grid.querySelectorAll(".run-evidence-row");
+    rows.forEach((row) => { row.style.minHeight = ""; });
+    if (stacked) return;
+    const indexes = new Set([...rows].map((row) => row.dataset.evidenceRow));
+    indexes.forEach((index) => {
+      const aligned = grid.querySelectorAll(`.run-evidence-row[data-evidence-row="${index}"]`);
+      const height = Math.max(...[...aligned].map((row) => row.getBoundingClientRect().height));
+      aligned.forEach((row) => { row.style.minHeight = `${Math.ceil(height)}px`; });
+    });
+  });
+}
+
+function evidenceKindLabel(value) {
+  const labels = {
+    model_call: "Model",
+    tool_call: "Tool call",
+    tool_result: "Tool result",
+    tool_output: "Tool result",
+    guardrail: "Policy",
+    policy: "Policy",
+    approval_decision: "Approval",
+    validation: "Validation",
+    state_load: "State",
+    state_update: "State",
+    delegation: "Delegation",
+    handoff: "Handoff",
+    skill: "Skill",
+    evidence: "Evidence",
+    eval: "Eval",
+    trace: "Trace",
+    artifact: "Artifact",
+    capability_boundary: "Boundary",
+  };
+  return labels[value] || humanizeOperation(value);
+}
+
+function humanizeOperation(value) {
+  return String(value || "run")
+    .replace(/[._-]+/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function renderRunEvidencePreview(details = {}) {
+  const items = [];
+  if (details.from || details.to) items.push(["Flow", [details.from, details.to].filter(Boolean).join(" → ")]);
+  if (details.tool) items.push(["Tool", details.tool]);
+  if (details.input !== undefined) items.push(["Input", details.input]);
+  if (Array.isArray(details.source_ids)) items.push(["Sources", details.source_ids]);
+  if (details.revision !== undefined) items.push(["Revision", details.revision]);
+  if (details.action_type) items.push(["Action", details.action_type]);
+  if (details.status) items.push(["Decision", details.status]);
+  if (details.reason) items.push(["Reason", details.reason]);
+  if (details.model_calls !== undefined) items.push(["Model calls", details.model_calls]);
+  if (!items.length) return "";
+  return `
+    <dl class="run-evidence-preview">
+      ${items.slice(0, 4).map(([label, value]) => `
+        <div>
+          <dt>${escapeHtml(label)}</dt>
+          <dd>${escapeHtml(formatEvidenceValue(value))}</dd>
+        </div>
+      `).join("")}
+    </dl>
+  `;
+}
+
+function formatEvidenceValue(value) {
+  const serialized = typeof value === "string" ? value : JSON.stringify(value);
+  const text = serialized === undefined ? String(value) : serialized;
+  return text.length > 180 ? `${text.slice(0, 177)}…` : text;
+}
+
+function renderTracePanel(side, run, delta, includeHeading = true, traceScale = null, comparisonId = run.run_id) {
   const trace = run.trace || { participants: [], spans: [], links: [] };
   const participants = trace.participants?.length ? trace.participants : [{ participant_id: "workflow", label: "Workflow" }];
   const spans = trace.spans || [];
-  const total = sharedTotal || Math.max(1, ...spans.map((span) => (span.start_offset_ms || 0) + Math.max(0, span.duration_ms || 0)));
+  const scale = traceScale || ComparisonState.comparisonTraceScale({ [side]: run });
+  const total = scale.total;
+  const sequenceContentWidth = scale.mode === "sequence"
+    ? Math.max(540, total * 92 + 120)
+    : 540;
+  const spanIndexes = new Map(spans.map((span, index) => [span.span_id, index]));
+  const geometryById = new Map(
+    spans.map((span, index) => [
+      span.span_id,
+      ComparisonState.traceSpanGeometry({ span, index, scale }),
+    ]),
+  );
   const addedKeys = new Set((delta?.added_spans || []).map((span) => span.semantic_key));
   const addedOccurrences = new Set((delta?.added_span_keys || []).map((item) => `${item.semantic_key}:${item.occurrence}`));
   const removedKeys = new Set((delta?.removed_spans || []).map((span) => span.semantic_key));
@@ -714,25 +917,30 @@ function renderTracePanel(side, run, delta, includeHeading = true, sharedTotal =
     occurrenceCounts[span.semantic_key] = occurrence + 1;
   });
   const axis = [0, .25, .5, .75, 1].map((fraction) => {
-    const label = hasRecordedTiming ? formatDuration(Math.round(total * fraction)) : `event ${Math.round(total * fraction)}`;
+    const label = scale.mode === "time"
+      ? formatDuration(Math.round(total * fraction))
+      : `event ${Math.min(total, Math.max(1, Math.floor(total * fraction) + 1))}`;
     return `<span style="left:${fraction * 100}%">${label}</span>`;
   }).join("");
   const laneData = participants.map((participant) => {
     const laneSpans = spans.filter((span) => span.participant_id === participant.participant_id);
-    const layout = layoutTraceSpans(laneSpans);
+    const layout = layoutTraceSpans(laneSpans, geometryById);
     const trackHeight = Math.max(1, layout.rows) * 30 + 8;
     const spanMarkup = laneSpans.map((span) => {
       const position = layout.positions[span.span_id] || { row: 0 };
-      const start = Math.max(0, span.start_offset_ms || 0) / total * 100;
-      const hasDuration = Number.isFinite(span.duration_ms) && span.duration_ms > 0;
-      const width = hasDuration ? Math.max(1.4, span.duration_ms / total * 100) : 0;
+      const geometry = geometryById.get(span.span_id)
+        || ComparisonState.traceSpanGeometry({
+          span,
+          index: spanIndexes.get(span.span_id) || 0,
+          scale,
+        });
       const exceptional = span.status === "failed" || span.status === "blocked";
       const statusLabel = exceptional ? ` · ${span.status}` : "";
       const label = `${span.operation}${statusLabel}`;
       const isNew = addedOccurrences.size ? addedOccurrences.has(spanOccurrences.get(span.span_id)) : addedKeys.has(span.semantic_key);
       const isRemoved = removedOccurrences.size ? removedOccurrences.has(spanOccurrences.get(span.span_id)) : removedKeys.has(span.semantic_key);
       const changeLabel = side === "after" && isNew ? " · new in After" : side === "before" && isRemoved ? " · removed in After" : "";
-      return `<button class="trace-span${hasDuration ? "" : " trace-span-point"}" type="button" data-comparison-id="${escapeHtml(comparisonId)}" data-side="${side}" data-span-id="${escapeHtml(span.span_id)}" data-kind="${escapeHtml(span.kind)}" data-status="${escapeHtml(span.status)}" data-point="${!hasDuration}" data-new="${side === "after" && isNew}" data-removed="${side === "before" && isRemoved}" aria-label="${escapeHtml(label + changeLabel)}" style="left:${start}%;${hasDuration ? `width:${width}%;` : ""}top:${position.row * 30 + 4}px" title="${escapeHtml(span.component)}.${escapeHtml(span.operation)} · ${escapeHtml(formatDuration(span.duration_ms))}${changeLabel}"><span class="trace-span-label">${escapeHtml(label)}</span></button>`;
+      return `<button class="trace-span" type="button" data-comparison-id="${escapeHtml(comparisonId)}" data-side="${side}" data-span-id="${escapeHtml(span.span_id)}" data-kind="${escapeHtml(span.kind)}" data-status="${escapeHtml(span.status)}" data-point="false" data-new="${side === "after" && isNew}" data-removed="${side === "before" && isRemoved}" aria-label="${escapeHtml(label + changeLabel)}" style="left:${geometry.startPercent}%;width:${geometry.widthPercent}%;top:${position.row * 30 + 4}px" title="${escapeHtml(span.component)}.${escapeHtml(span.operation)} · ${escapeHtml(formatDuration(span.duration_ms))}${changeLabel}"><span class="trace-span-label">${escapeHtml(label)}</span></button>`;
     }).join("");
     return { participant, laneSpans, layout, trackHeight, spanMarkup };
   });
@@ -742,11 +950,14 @@ function renderTracePanel(side, run, delta, includeHeading = true, sharedTotal =
   laneData.forEach((data) => {
     data.laneSpans.forEach((span) => {
       const position = data.layout.positions[span.span_id] || { row: 0 };
-      const start = Math.max(0, span.start_offset_ms || 0) / total * 100;
-      const hasDuration = Number.isFinite(span.duration_ms) && span.duration_ms > 0;
-      const width = hasDuration ? Math.max(1.4, span.duration_ms / total * 100) : 0;
+      const geometry = geometryById.get(span.span_id)
+        || ComparisonState.traceSpanGeometry({
+          span,
+          index: spanIndexes.get(span.span_id) || 0,
+          scale,
+        });
       spanPositionById.set(span.span_id, {
-        x: start + (hasDuration ? width / 2 : 0),
+        x: geometry.startPercent + geometry.widthPercent / 2,
         y: laneTop + position.row * 30 + 16,
       });
     });
@@ -771,26 +982,21 @@ function renderTracePanel(side, run, delta, includeHeading = true, sharedTotal =
   return `
     <article class="diff-trace-panel" data-side="${side}">
       ${includeHeading ? `<div class="diff-trace-heading"><h4>${side === "before" ? "Before" : "After"} · ${escapeHtml(displayStageLabel(run.stage))}</h4><span class="run-id" title="${escapeHtml(run.run_id)}">${escapeHtml(run.run_id)}</span></div>` : ""}
-      <div class="trace-canvas"><div class="trace-content" style="height:${canvasHeight}px"><div class="trace-axis">${axis}</div>${traceLines ? `<div class="trace-link-layer" aria-hidden="true"><svg viewBox="0 0 100 ${Math.max(1, canvasHeight - 22)}" preserveAspectRatio="none"><defs><marker id="trace-arrow-${comparisonId}-${side}" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 z" /></marker></defs>${traceLines}</svg></div>` : ""}${lanes}</div></div>
+      <div class="trace-canvas"><div class="trace-content" style="height:${canvasHeight}px;min-width:${sequenceContentWidth}px"><div class="trace-axis">${axis}</div>${traceLines ? `<div class="trace-link-layer" aria-hidden="true"><svg viewBox="0 0 100 ${Math.max(1, canvasHeight - 22)}" preserveAspectRatio="none"><defs><marker id="trace-arrow-${comparisonId}-${side}" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 z" /></marker></defs>${traceLines}</svg></div>` : ""}${lanes}</div></div>
       ${links ? `<div class="trace-links" aria-label="Trace links">${links}</div>` : ""}
     </article>
   `;
 }
 
-function sharedTraceDuration(before, after) {
-  return Math.max(1, ...[before, after].flatMap((run) => (run.trace?.spans || []).map((span) => (span.start_offset_ms || 0) + Math.max(0, span.duration_ms || 0))));
-}
-
-function traceHasRecordedTiming(before, after) {
-  return [before, after].some((run) => (run.trace?.spans || []).some((span) => Number.isFinite(span.duration_ms) && span.duration_ms > 0));
-}
-
-function layoutTraceSpans(spans) {
+function layoutTraceSpans(spans, geometryById) {
   const rows = [];
   const positions = {};
-  [...spans].sort((a, b) => (a.start_offset_ms || 0) - (b.start_offset_ms || 0)).forEach((span) => {
-    const start = span.start_offset_ms || 0;
-    const end = start + Math.max(1, span.duration_ms || 1);
+  [...spans].sort(
+    (a, b) => (geometryById.get(a.span_id)?.layoutStart || 0) - (geometryById.get(b.span_id)?.layoutStart || 0),
+  ).forEach((span) => {
+    const geometry = geometryById.get(span.span_id) || { layoutStart: 0, layoutEnd: 1 };
+    const start = geometry.layoutStart;
+    const end = geometry.layoutEnd;
     let row = rows.findIndex((lastEnd) => start >= lastEnd);
     if (row < 0) row = rows.length;
     rows[row] = end;
@@ -1560,10 +1766,13 @@ function hasModelIo(details = {}) {
   return [...MODEL_IO_KEYS].some((key) => details[key] !== undefined);
 }
 
-function renderModelIoFields(details = {}) {
-  const providerInputLabel = details.provider_input_mode === "reconstructed_lab_1_boundary"
-    ? "RECONSTRUCTED PROVIDER INPUT (LAB 1 BOUNDARY)"
-    : "ACTUAL PROVIDER INPUT";
+function renderModelIoFields(details = {}, comparison = {}) {
+  const providerInputLabels = {
+    reconstructed_lab_1_boundary: "RECONSTRUCTED PROVIDER INPUT (LAB 1 BOUNDARY)",
+    normalized_tool_flow: "NORMALIZED PROVIDER INPUT",
+  };
+  const providerInputLabel = providerInputLabels[details.provider_input_mode]
+    || "ACTUAL PROVIDER INPUT";
   const fields = [
     ["SYSTEM PROMPT", "system_prompt"],
     ["USER REQUEST", "user_request"],
@@ -1575,18 +1784,42 @@ function renderModelIoFields(details = {}) {
     <div class="model-io-meta">${escapeHtml(details.provider || "provider unknown")} · ${escapeHtml(details.model || "model unknown")}</div>
     <div class="model-io-fields">
       ${fields
-        .filter(([, key]) => details[key] !== undefined)
-        .map(([label, key]) => `
+        .filter(([, key]) => key === null || details[key] !== undefined)
+        .map(([label, key]) => {
+          const fieldComparison = (comparison.fieldComparisons || []).find((field) => field.key === key);
+          const statusLabel = fieldComparison
+            ? fieldComparison.status === "same"
+              ? "SAME"
+              : fieldComparison.output
+                ? "DIFFERENT OUTPUT"
+                : "CHANGED"
+            : "";
+          const excerpt = fieldComparison?.status === "different"
+            && fieldComparison.input
+            ? fieldComparison[`${comparison.side}_excerpt`]
+            : "";
+          const note = fieldComparison?.status === "different"
+            && fieldComparison.input
+            ? excerpt
+              ? `Only on this side: ${excerpt}`
+              : "The other side adds content at this position."
+            : "";
+          return `
           <section class="model-io-field">
-            <div class="section-label">${label}</div>
+            <div class="model-io-field-heading">
+              <div class="section-label">${label}</div>
+              ${statusLabel ? `<span class="model-io-diff-status" data-status="${fieldComparison.status}" data-output="${fieldComparison.output}">${statusLabel}</span>` : ""}
+            </div>
+            ${note ? `<div class="model-io-diff-note">${escapeHtml(note)}</div>` : ""}
             <pre>${escapeHtml(String(details[key]))}</pre>
           </section>
-        `).join("")}
+        `;
+        }).join("")}
     </div>
   `;
 }
 
-function renderEventDetails(details = {}) {
+function renderEventDetails(details = {}, openModelIo = true, comparison = {}) {
   if (!Object.keys(details).length) return "";
   if (!hasModelIo(details)) {
     return `<details class="event-details"><summary>Input / output summary</summary><pre>${escapeHtml(JSON.stringify(details, null, 2))}</pre></details>`;
@@ -1595,9 +1828,9 @@ function renderEventDetails(details = {}) {
     Object.entries(details).filter(([key]) => !MODEL_IO_KEYS.has(key)),
   );
   return `
-    <details class="event-details model-io-details" open>
+    <details class="event-details model-io-details" ${openModelIo ? "open" : ""}>
       <summary>Prompt &amp; model I/O</summary>
-      ${renderModelIoFields(details)}
+      ${renderModelIoFields(details, comparison)}
       ${Object.keys(metadata).length ? `<section class="model-io-field"><div class="section-label">CALL METADATA</div><pre>${escapeHtml(JSON.stringify(metadata, null, 2))}</pre></section>` : ""}
     </details>
   `;

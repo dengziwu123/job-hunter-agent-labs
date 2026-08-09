@@ -1,0 +1,20 @@
+[
+  {
+    "source_id": "source-jd-001",
+    "title": "AI Tools Engineer job description",
+    "path": "labs/lab_04/data/sources.json",
+    "snippet": "The role requires Python production experience and the ability to integrate LLM APIs into internal tools."
+  },
+  {
+    "source_id": "source-profile-001",
+    "title": "Synthetic candidate profile",
+    "path": "labs/lab_04/data/sources.json",
+    "snippet": "The candidate has Python, SQL, API integration, and workflow automation experience."
+  },
+  {
+    "source_id": "source-company-001",
+    "title": "Northstar Systems public notes",
+    "path": "labs/lab_04/data/sources.json",
+    "snippet": "Northstar Systems builds internal developer tools for operations teams."
+  }
+]
