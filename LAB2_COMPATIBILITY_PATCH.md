@@ -1,17 +1,17 @@
 # Lab 2 compatibility note for existing workspaces
 
-这份说明适用于已经完成 Lab 2、再安装当前 v5 browser patch 的学生。
+这份说明适用于已经完成 Lab 2、再安装当前 v6 browser patch 的学生。
 
 ## 不需要重做或手工修改 Lab 2
 
-当前 v5 patch 已经直接包含课程维护的：
+当前 v6 patch 已经直接包含课程维护的：
 
 ```text
 labs/lab_01/web_adapter.py
 labs/lab_02/web_adapter.py
 ```
 
-正常解压 v5 后，不需要让 coding agent 修改 Lab 2，也不需要再手工添加 helper 参数。
+正常解压 v6 后，不需要让 coding agent 修改 Lab 2，也不需要再手工添加 helper 参数。
 
 patch 只覆盖课程提供的网页 adapter，不覆盖学生作答的文件：
 
@@ -45,7 +45,7 @@ course-owned I/O compatibility bridge。
 macOS Terminal：
 
 ```bash
-unzip -o ../job-hunter-agent-browser-patch-v5.zip -x README.md
+unzip -o ../job-hunter-agent-browser-patch-v6.zip -x README.md
 uv run uvicorn labs.shared.web.app:app --reload
 ```
 
@@ -55,12 +55,12 @@ Windows PowerShell：
 
 ```powershell
 $readme = [IO.File]::ReadAllBytes((Resolve-Path .\README.md))
-Expand-Archive -Path ..\job-hunter-agent-browser-patch-v5.zip -DestinationPath . -Force
+Expand-Archive -Path ..\job-hunter-agent-browser-patch-v6.zip -DestinationPath . -Force
 [IO.File]::WriteAllBytes((Join-Path (Get-Location) "README.md"), $readme)
 uv run uvicorn labs.shared.web.app:app --reload
 ```
 
-如果之后重新解压本地已下载的旧 Lab zip，请再次应用 v5。不要重新解压已经完成的
+如果之后重新解压本地已下载的旧 Lab zip，请再次应用 v6。不要重新解压已经完成的
 Lab 1/2 zip：它包含 starter `src/`，会覆盖你的作答；只想更新 runtime 就使用 browser patch。
 
 ## 无 API 验证

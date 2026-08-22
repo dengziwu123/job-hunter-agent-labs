@@ -405,6 +405,7 @@ def build_evidence_capability(
         },
         "skill": skill.model_dump(),
         "task_prompt": task_prompt.model_dump(exclude={"template"}),
+        "request_context": request_context,
         "mcp_boundary": mcp_boundary,
         "draft_action": tool_action["action"],
     }
