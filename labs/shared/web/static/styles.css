@@ -289,6 +289,7 @@ select:focus, input:focus, textarea:focus { border-color: #61a28d; box-shadow: 0
 .message.markdown code { padding: 2px 4px; border-radius: 4px; color: #295442; background: #e2ece7; font: .9em ui-monospace, SFMono-Regular, Menlo, monospace; }
 .message.markdown pre { margin: 0 0 12px; padding: 10px; overflow-x: auto; border-radius: 8px; color: #e8f3ed; background: #1d2925; }
 .message.markdown pre code { padding: 0; color: inherit; background: transparent; font-size: 11px; white-space: pre; }
+.message.markdown .markdown-table-wrap { margin: 0 0 12px; }
 .error-location { display: block; margin-top: 6px; color: #95514a; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; }
 
 .composer { margin: 0 14px 14px; border: 1px solid var(--line); border-radius: 13px; background: white; overflow: hidden; }
@@ -373,6 +374,14 @@ dialog textarea { resize: vertical; }
 .instructions-content code { padding: 2px 4px; border-radius: 4px; color: #295442; background: #e2ece7; font: .9em ui-monospace, SFMono-Regular, Menlo, monospace; }
 .instructions-content pre { margin: 0 0 16px; padding: 13px 14px; overflow-x: auto; border-radius: 9px; color: #e8f3ed; background: #1d2925; }
 .instructions-content pre code { padding: 0; color: inherit; background: transparent; font-size: 12px; white-space: pre; }
+.instructions-content .markdown-table-wrap { margin: 0 0 16px; }
+.markdown-table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid var(--soft-line); border-radius: 9px; }
+.markdown-table-wrap table { width: 100%; min-width: 560px; border-collapse: collapse; table-layout: fixed; background: white; }
+.markdown-table-wrap th, .markdown-table-wrap td { padding: 9px 11px; border-bottom: 1px solid var(--soft-line); overflow-wrap: anywhere; text-align: left; vertical-align: top; }
+.markdown-table-wrap th { color: #34423d; background: #f3f7f5; font-weight: 700; }
+.markdown-table-wrap tbody tr:last-child td { border-bottom: 0; }
+.markdown-table-wrap .align-center { text-align: center; }
+.markdown-table-wrap .align-right { text-align: right; }
 .instructions-placeholder { color: var(--muted); }
 .instructions-compatibility { padding: 20px; border: 1px solid #d8e7df; border-radius: 12px; background: #f1f8f4; }
 .instructions-compatibility-kicker { margin-bottom: 8px !important; color: var(--green); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }

@@ -1504,19 +1504,13 @@ async function runEvalSuite() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ stage: state.stage, workspace_id: state.workspaceId }),
     });
-    const messages = loadMessages();
+    renderInspector(response);
     if (response.status === "ok") {
       const summary = response.summary;
-      messages.push({
-        role: "assistant",
-        content: `Eval complete: ${summary.passed}/${summary.total} passed, ${summary.failed} failed. Inspect each task to find the first failure point.`,
-      });
+      showToast(`Eval complete: ${summary.passed}/${summary.total} passed, ${summary.failed} failed. Inspect the run for details.`);
     } else {
-      messages.push({ role: "error", content: response.error?.message || "Eval failed.", error: response.error });
+      showToast(response.error?.message || "Eval failed.");
     }
-    saveMessages(messages);
-    renderTranscript();
-    renderInspector(response);
   } catch (error) {
     showToast(error.message);
   } finally {
@@ -1669,6 +1663,33 @@ function renderMarkdown(markdown) {
       continue;
     }
 
+    if (isMarkdownTableStart(lines, index)) {
+      const headers = splitMarkdownTableRow(lines[index]);
+      const delimiters = splitMarkdownTableRow(lines[index + 1]);
+      const alignments = delimiters.map((delimiter) => {
+        const value = delimiter.trim();
+        if (value.startsWith(":") && value.endsWith(":")) return "center";
+        if (value.endsWith(":")) return "right";
+        return "left";
+      });
+      const renderCells = (cells, tag) => headers.map((_, cellIndex) => {
+        const alignment = alignments[cellIndex];
+        const value = cells[cellIndex] ?? "";
+        return `<${tag} class="align-${alignment}">${renderInlineMarkdown(value.trim())}</${tag}>`;
+      }).join("");
+      const rows = [];
+      index += 2;
+      while (index < lines.length && lines[index].trim() && lines[index].includes("|")) {
+        rows.push(`<tr>${renderCells(splitMarkdownTableRow(lines[index]), "td")}</tr>`);
+        index += 1;
+      }
+      blocks.push(
+        `<div class="markdown-table-wrap"><table><thead><tr>${renderCells(headers, "th")}</tr></thead>`
+        + `<tbody>${rows.join("")}</tbody></table></div>`,
+      );
+      continue;
+    }
+
     if (/^ {0,3}((\*\s*){3,}|(-\s*){3,}|(_\s*){3,})$/.test(lines[index])) {
       blocks.push("<hr />");
       index += 1;
@@ -1707,7 +1728,12 @@ function renderMarkdown(markdown) {
 
     const paragraphLines = [lines[index]];
     index += 1;
-    while (index < lines.length && lines[index].trim() && !isMarkdownBlockStart(lines[index])) {
+    while (
+      index < lines.length
+      && lines[index].trim()
+      && !isMarkdownBlockStart(lines[index])
+      && !isMarkdownTableStart(lines, index)
+    ) {
       paragraphLines.push(lines[index]);
       index += 1;
     }
@@ -1715,6 +1741,66 @@ function renderMarkdown(markdown) {
   }
 
   return blocks.join("");
+}
+
+function splitMarkdownTableRow(line) {
+  const source = String(line ?? "").trim();
+  const cells = [];
+  let cell = "";
+  let codeDelimiterLength = 0;
+
+  for (let index = 0; index < source.length;) {
+    if (source[index] === "\\") {
+      const slashStart = index;
+      while (source[index] === "\\") index += 1;
+      const slashCount = index - slashStart;
+      const escapedCharacter = source[index];
+      if (slashCount % 2 === 1 && escapedCharacter === "|") {
+        cell += "\\".repeat(slashCount - 1) + escapedCharacter;
+        index += 1;
+      } else if (slashCount % 2 === 1 && escapedCharacter === "`") {
+        cell += "\\".repeat(slashCount) + escapedCharacter;
+        index += 1;
+      } else {
+        cell += "\\".repeat(slashCount);
+      }
+      continue;
+    }
+
+    if (source[index] === "`") {
+      const delimiterStart = index;
+      while (source[index] === "`") index += 1;
+      const delimiterLength = index - delimiterStart;
+      if (codeDelimiterLength === delimiterLength) codeDelimiterLength = 0;
+      else if (codeDelimiterLength === 0) codeDelimiterLength = delimiterLength;
+      cell += "`".repeat(delimiterLength);
+      continue;
+    }
+
+    if (source[index] === "|" && codeDelimiterLength === 0) {
+      cells.push(cell);
+      cell = "";
+      index += 1;
+      continue;
+    }
+
+    cell += source[index];
+    index += 1;
+  }
+
+  cells.push(cell);
+  if (source.startsWith("|")) cells.shift();
+  if (source.endsWith("|") && cells.at(-1) === "") cells.pop();
+  return cells;
+}
+
+function isMarkdownTableStart(lines, index) {
+  if (index + 1 >= lines.length || !lines[index].includes("|")) return false;
+  const headers = splitMarkdownTableRow(lines[index]);
+  const delimiters = splitMarkdownTableRow(lines[index + 1]);
+  return headers.length > 1
+    && headers.length === delimiters.length
+    && delimiters.every((cell) => /^:?-{3,}:?$/.test(cell.trim()));
 }
 
 function isMarkdownBlockStart(line) {
@@ -1875,8 +1961,21 @@ function clearInspector(loading = false) {
 }
 
 function loadMessages() {
-  try { return JSON.parse(localStorage.getItem(messageKey()) || "[]"); }
+  try {
+    const messages = JSON.parse(localStorage.getItem(messageKey()) || "[]");
+    if (!Array.isArray(messages)) return [];
+    const migrated = messages.filter((message) => !isLegacyEvalTranscriptMessage(message));
+    if (migrated.length !== messages.length) {
+      saveMessages(migrated);
+    }
+    return migrated;
+  }
   catch { return []; }
+}
+
+function isLegacyEvalTranscriptMessage(message) {
+  return message?.role === "assistant"
+    && /^Eval complete: \d+\/\d+ passed, \d+ failed\. Inspect each task to find the first failure point\.$/.test(String(message.content));
 }
 
 function saveMessages(messages) {
