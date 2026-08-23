@@ -14,14 +14,16 @@ REQUIRED_PATHS = [
     'labs/lab_02/stage.json',
     'labs/lab_03/stage.json',
     'labs/lab_04/stage.json',
-    'labs/lab_05/stage.json'
+    'labs/lab_05/stage.json',
+    'labs/lab_06/stage.json'
 ]
 STAGE_MANIFESTS = [
     'labs/lab_01/stage.json',
     'labs/lab_02/stage.json',
     'labs/lab_03/stage.json',
     'labs/lab_04/stage.json',
-    'labs/lab_05/stage.json'
+    'labs/lab_05/stage.json',
+    'labs/lab_06/stage.json'
 ]
 LAB_4_REWORK_REQUIREMENTS = {
     'labs/lab_04/src/context_budget.py': 'def select_context(',
@@ -64,7 +66,7 @@ def main() -> None:
             stage = json.loads(manifest_path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
             raise SystemExit(
-                "This Lab 05 package appears incomplete. "
+                "This Lab 06 package appears incomplete. "
                 "Invalid stage manifest " + manifest + ": " + str(exc) + ". "
                 "Re-extract the Lab packages into the same workspace and run this check again."
             ) from None
@@ -75,10 +77,10 @@ def main() -> None:
         )
     if missing:
         raise SystemExit(
-            "This Lab 05 package must be extracted into the same workspace "
+            "This Lab 06 package must be extracted into the same workspace "
             "used for the previous labs. Missing: " + ", ".join(missing)
         )
-    print("Lab 05 dependency check passed.")
+    print("Lab 06 dependency check passed.")
 
 
 if __name__ == "__main__":

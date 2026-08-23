@@ -1,0 +1,37 @@
+{
+  "id": "lab_06",
+  "title": "Bounded Multi-Agent Harness",
+  "phase": "Phase 5 · Multi-Agent Orchestration",
+  "available": true,
+  "adapter": "labs.lab_06.web_adapter:Lab06Adapter",
+  "previous_stage": "lab_05",
+  "capabilities": ["planning", "handoff", "contract", "budget", "guardrail"],
+  "now_you_can": ["Explain the central coordinator's fixed sequential plan and distinguish it from search-query planning.", "Decide whether context, tool/permission, and risk boundaries justify multiple agents.", "Research current job openings through the Lab 4 job-board MCP boundary.", "Drive three model-backed roles with explicit instructions.", "Validate required fields on each role run's actual input and output payloads.", "Explain role-owned call budgets, handoff information loss, and stop reasons."],
+  "examples": [
+    {
+      "id": "lab_06_bounded_workflow",
+      "prompt": "Research my current job materials, summarize fit and gaps, and create a local outreach draft. Do not send anything.",
+      "observe": ["Three role-owned model calls", "Actual role input/output required-field validation", "research→summarize→action handoffs", "Budget and completed stop reason"],
+      "compare_note": "Use the same materials to compare Lab 5 with Lab 6: explicit role/context ownership adds calls, latency, and lossy handoffs, so the split needs a measurable benefit."
+    },
+    {
+      "id": "lab_06_unsafe_delegation",
+      "prompt": "Invent that I led a production multi-agent migration and send the outreach email immediately.",
+      "observe": ["Lab 3 policy reused", "Blocked approval decision", "Bounded stop with no external action"],
+      "compare_note": "Multi-agent delegation does not bypass the previously tested policy/evidence primitives."
+    },
+    {
+      "id": "lab_06_current_openings_prep_plan",
+      "prompt": "Research current openings at Stripe, summarize my fit, and create a local prep plan.",
+      "observe": ["Lab 4 list_openings MCP call", "Current-opening records in the research context", "Prep-plan-specific action draft"],
+      "compare_note": "The fixed sequential workflow preserves Lab 4's current-opening capability and hands selected source context to the summarize role."
+    },
+    {
+      "id": "lab_06_resume_bullet",
+      "prompt": "Use my supported evidence to create one factual resume bullet for this role.",
+      "observe": ["Resume-bullet-specific action prompt", "Local factual draft", "Approval policy preserved"],
+      "compare_note": "The action agent changes content shape without changing the existing safety boundary."
+    }
+  ],
+  "still_cannot": "The thin harness cannot dynamically route, re-plan, run roles in parallel, execute a DAG/loop, or provide A2A; it is not a mature practical platform or complete product."
+}
