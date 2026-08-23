@@ -14,8 +14,8 @@ from labs.shared.web.contracts import HarnessEvent
 POLICY_RESPONSE_STATUS = {
     "draft_created": "ok",
     "needs_approval": "needs_approval",
-    # TODO(lab_05): preserve the policy decision at the response boundary.
-    "blocked": "ok",
+    # (lab_05): preserve the policy decision at the response boundary.
+    "blocked": "blocked",
 }
 
 
